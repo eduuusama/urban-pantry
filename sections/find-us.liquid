@@ -30,7 +30,7 @@
 
     {%- for retailer in retailers -%}
       <div data-reveal data-reveal-delay="{{ forloop.index0 | times: 50 }}ms" style="display: flex; align-items: center; justify-content: center; padding: 1.5rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); transition: transform 0.3s ease;">
-        <img src="{{ retailer | append: '.webp' | prepend: 'retailers/' | asset_url }}" alt="{{ retailer | capitalize }}" style="max-height: 80px; max-width: 100%; object-fit: contain;">
+        <img src="{{ retailer | append: '.png' | prepend: 'retailers/' | asset_url }}" alt="{{ retailer | capitalize }}" style="max-height: 80px; max-width: 100%; object-fit: contain;">
       </div>
     {%- endfor -%}
 
