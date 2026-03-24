@@ -1,0 +1,64 @@
+<section class="py-24 px-6 grain-overlay">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+      {%- comment -%} Text Content {%- endcomment -%}
+      <div class="space-y-6">
+        <h2
+          class="font-display text-6xl lg:text-7xl text-foreground"
+          data-reveal
+        >
+          Global Street Markets
+        </h2>
+
+        <h3
+          class="font-raw text-5xl text-primary -rotate-1"
+          data-reveal
+        >
+          Get Live On Your Plate.
+        </h3>
+
+        <p
+          class="font-body text-muted-foreground font-light leading-relaxed max-w-lg"
+          data-reveal
+        >
+          Every bottle starts with a journey. Chef Arik Markus spent years traveling the world's most vibrant street food markets, eating, learning, and falling in love with the authentic flavors that define each culture's cuisine. Urban Pantry is the direct result of those adventures — a collection of sauces that taste like the real thing because they are.
+        </p>
+
+        <blockquote
+          class="spray-quote font-raw text-3xl lg:text-4xl text-accent italic max-w-md"
+          data-reveal
+        >
+          "Because one sauce doesn't fit every dish."
+        </blockquote>
+
+        <div data-reveal>
+          <a
+            href="/pages/saucy-story"
+            class="text-primary border-b-2 border-primary hover:opacity-75 transition-opacity font-body text-sm tracking-wide"
+          >
+            Read the Saucy Story →
+          </a>
+        </div>
+      </div>
+
+      {%- comment -%} Image {%- endcomment -%}
+      <div class="md:mr-[-4rem] overflow-visible" data-reveal>
+        <img
+          src="{{ 'street-market.webp' | asset_url }}"
+          alt="Global street market"
+          class="w-full object-cover rounded"
+          style="aspect-ratio: 4 / 5;"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Story",
+  "settings": []
+}
+{% endschema %}

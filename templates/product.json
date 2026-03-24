@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "product_hero": {
+      "type": "product-hero"
+    },
+    "product_story": {
+      "type": "product-story"
+    },
+    "flavor_dna": {
+      "type": "flavor-dna"
+    },
+    "product_reviews": {
+      "type": "product-reviews"
+    },
+    "cross_sell": {
+      "type": "cross-sell"
+    }
+  },
+  "order": ["product_hero", "product_story", "flavor_dna", "product_reviews", "cross_sell"]
+}

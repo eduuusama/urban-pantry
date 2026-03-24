@@ -1,0 +1,133 @@
+{%- comment -%} Desktop Hero {%- endcomment -%}
+<section class="hidden md:block relative min-h-screen overflow-hidden grain-overlay grain-heavy" id="hero-section">
+  {%- comment -%} Background Image {%- endcomment -%}
+  <div
+    class="absolute inset-0"
+    style="
+      background-image: url('{{ 'hero-desktop.webp' | asset_url }}');
+      background-size: cover;
+      background-position: right center;
+    "
+  ></div>
+
+  {%- comment -%} Gradient Overlay {%- endcomment -%}
+  <div
+    class="absolute inset-0"
+    style="
+      background: linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background)) 30%, transparent 100%);
+    "
+  ></div>
+
+  {%- comment -%} Content {%- endcomment -%}
+  <div class="relative h-full flex items-center">
+    <div class="max-w-7xl mx-auto px-6 max-w-xl">
+      <div class="space-y-4">
+        <h1
+          class="font-display text-5xl lg:text-6xl text-foreground animate-word-reveal"
+          style="opacity: 0; animation-delay: 300ms;"
+        >
+          Chef-Crafted Heat.
+        </h1>
+
+        <h2
+          class="font-raw text-5xl text-primary -rotate-2 animate-word-reveal"
+          style="opacity: 0; animation-delay: 450ms;"
+        >
+          Street-Born Flavor.
+        </h2>
+
+        <p
+          class="font-body text-muted-foreground max-w-lg leading-relaxed"
+          style="opacity: 0; animation: fadeIn 0.6s ease forwards; animation-delay: 600ms;"
+        >
+          Real peppers. Real spices. Real flavor — sourced from where they're born, crafted by a Michelin-trained chef.
+        </p>
+
+        <div style="opacity: 0; animation: fadeIn 0.6s ease forwards; animation-delay: 750ms;">
+          <a
+            href="/products/boom-box"
+            class="btn-add-to-cart inline-block bg-primary text-primary-foreground font-display text-xl tracking-widest px-10 py-4 rounded transition-opacity hover:opacity-90 animate-cta-pulse"
+            role="button"
+          >
+            Shop the Collection
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Mobile Hero {%- endcomment -%}
+<section class="md:hidden relative py-12 px-6 grain-overlay" id="hero-section-mobile">
+  <div class="text-center space-y-6 mb-8">
+    <h1 class="font-display text-4xl text-foreground animate-word-reveal">Chef-Crafted Heat.</h1>
+    <h2 class="font-raw text-3xl text-primary -rotate-2 animate-word-reveal" style="animation-delay: 150ms;">
+      Street-Born Flavor.
+    </h2>
+
+    <p class="font-body text-muted-foreground text-sm leading-relaxed max-w-sm mx-auto" style="opacity: 0; animation: fadeIn 0.6s ease forwards; animation-delay: 300ms;">
+      Real peppers. Real spices. Real flavor — sourced from where they're born, crafted by a Michelin-trained chef.
+    </p>
+
+    <div style="opacity: 0; animation: fadeIn 0.6s ease forwards; animation-delay: 450ms;">
+      <a
+        href="/products/boom-box"
+        class="inline-block bg-primary text-primary-foreground font-display text-base tracking-widest px-6 py-3 rounded transition-opacity hover:opacity-90"
+        role="button"
+      >
+        Shop Now
+      </a>
+    </div>
+  </div>
+
+  <img
+    src="{{ 'hero-mobile.webp' | asset_url }}"
+    alt="Urban Pantry hot sauces"
+    class="w-full object-contain"
+  />
+</section>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  #hero-section.revealed h1,
+  #hero-section.revealed h2 {
+    opacity: 1;
+  }
+
+  #hero-section-mobile.revealed h1,
+  #hero-section-mobile.revealed h2 {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  (function() {
+    const sections = [
+      document.getElementById('hero-section'),
+      document.getElementById('hero-section-mobile')
+    ];
+
+    setTimeout(() => {
+      sections.forEach(section => {
+        if (section) {
+          section.classList.add('revealed');
+        }
+      });
+    }, 200);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": []
+}
+{% endschema %}

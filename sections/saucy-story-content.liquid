@@ -1,0 +1,169 @@
+{%- comment -%}
+  Saucy Story Content Section
+  Complete brand story with origin, mission, sauce showcase, and philosophy
+{%- endcomment -%}
+
+{%- comment -%}SECTION A: Origin Story{%- endcomment -%}
+<section style="padding: 6rem 1rem; max-width: 1400px; margin: 0 auto;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+
+    {%- comment -%}Text column{%- endcomment -%}
+    <div data-reveal>
+      <p class="font-raw text-primary" style="font-size: 1.125rem; margin-bottom: 1rem;">
+        How It Started
+      </p>
+      <h2 class="font-display text-foreground" style="font-size: clamp(2rem, 5vw, 3.125rem); line-height: 1.2; margin-bottom: 2rem;">
+        A Chef Who Ate His Way Around the World
+      </h2>
+      <p class="text-foreground" style="font-family: var(--font-body); font-size: 1rem; line-height: 1.8; color: hsl(var(--foreground)); opacity: 0.9;">
+        Arik Markus didn't grow up eating hot sauce from a bottle. He grew up eating food — real food, from real places. Street stalls in Bangkok. Spice markets in Marrakech. Taquerías in Oaxaca. Night markets in Jakarta. Everywhere he traveled, he found the same thing: one sauce, made for that cuisine, that made everything taste exactly right. Then he'd come home and couldn't find it anywhere.
+      </p>
+    </div>
+
+    {%- comment -%}Image column{%- endcomment -%}
+    <div data-reveal data-reveal-delay="200ms">
+      <img src="{{ 'chef-arik.webp' | asset_url }}" alt="Chef Arik Markus" style="width: 100%; height: auto; display: block;">
+    </div>
+
+  </div>
+</section>
+
+{%- comment -%}SECTION B: The Mission{%- endcomment -%}
+<section class="bg-primary" style="padding: 6rem 1rem; text-align: center;">
+  <div data-reveal style="max-width: 900px; margin: 0 auto;">
+
+    <h2 class="font-display text-primary-foreground" style="font-size: clamp(2rem, 5vw, 3.75rem); line-height: 1.2; margin-bottom: 2rem;">
+      One Sauce Per Cuisine.
+    </h2>
+
+    <p class="font-raw" style="font-size: clamp(1.5rem, 3vw, 1.875rem); color: hsl(var(--primary-foreground)); margin-bottom: 2rem;">
+      No compromises. No shortcuts. No one-size-fits-all.
+    </p>
+
+    <p class="text-primary-foreground" style="font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.8; opacity: 0.95;">
+      Every Urban Pantry sauce is crafted to honor one cuisine, one tradition, one story. We source ingredients from the regions that inspired us, follow the methods that matter, and reject anything that dilutes the flavor. When you taste Urban Pantry, you're tasting authenticity — the real heat, the real flavor, the real story.
+    </p>
+
+  </div>
+</section>
+
+{%- comment -%}SECTION C: The Four Sauces{%- endcomment -%}
+<section style="padding: 6rem 1rem; max-width: 1400px; margin: 0 auto;">
+
+  {% assign bomba = all_products['bomba-sauce'] %}
+  {% assign morockin = all_products['mo-rockin-sauce'] %}
+  {% assign piquin = all_products['piquin-hot'] %}
+  {% assign sambal = all_products['sambal-istic-sauce'] %}
+
+  <div style="text-align: center; margin-bottom: 4rem;">
+    <p class="font-raw text-primary" style="font-size: 1.125rem; margin-bottom: 0.5rem;">
+      Our Collection
+    </p>
+    <h2 class="font-display text-foreground" style="font-size: clamp(2rem, 5vw, 3.125rem); line-height: 1.2;">
+      Four Sauces. Four Stories.
+    </h2>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+
+    {%- for sauce in all_products limit:4 -%}
+      {%- if sauce.handle == 'bomba-sauce' or sauce.handle == 'mo-rockin-sauce' or sauce.handle == 'piquin-hot' or sauce.handle == 'sambal-istic-sauce' -%}
+
+        <div data-reveal data-reveal-delay="{{ forloop.index0 | times: 100 }}ms" style="border: 1px solid hsl(var(--border)); padding: 2rem; text-align: center; background: hsl(var(--card)); transition: transform 0.3s ease;">
+
+          <div style="margin-bottom: 1.5rem;">
+            {% if sauce.featured_image %}
+              <img src="{{ sauce.featured_image | image_url: width: 300 }}" alt="{{ sauce.title }}" style="width: 100%; height: 300px; object-fit: cover; display: block;">
+            {% endif %}
+          </div>
+
+          <p class="font-raw text-primary" style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">
+            {% if sauce.metafields.custom.origin %}
+              {{ sauce.metafields.custom.origin }}
+            {% endif %}
+          </p>
+
+          <h3 class="font-display text-foreground" style="font-size: 1.5rem; margin-bottom: 0.5rem;">
+            {{ sauce.title }}
+          </h3>
+
+          {% if sauce.metafields.custom.subtitle %}
+            <p class="text-muted-foreground" style="font-family: var(--font-body); font-size: 0.9375rem; margin-bottom: 1rem;">
+              {{ sauce.metafields.custom.subtitle }}
+            </p>
+          {% endif %}
+
+          <p class="text-foreground" style="font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 1.5rem; opacity: 0.85;">
+            {{ sauce.description | strip_html | truncatewords: 20 }}
+          </p>
+
+          <a href="{{ sauce.url }}" style="display: inline-block; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 0.75rem 1.5rem; text-decoration: none; font-family: var(--font-display); font-size: 0.875rem; letter-spacing: 0.05em; transition: opacity 0.2s ease;">
+            View Sauce
+          </a>
+
+        </div>
+
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div>
+
+</section>
+
+{%- comment -%}SECTION D: Philosophy & Promise{%- endcomment -%}
+<section style="padding: 6rem 1rem; max-width: 1200px; margin: 0 auto;">
+
+  <div data-reveal style="text-align: center; margin-bottom: 4rem;">
+    <h2 class="font-display text-foreground" style="font-size: clamp(2rem, 5vw, 3.125rem); line-height: 1.2;">
+      The Urban Pantry Promise
+    </h2>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+
+    {%- comment -%}Pillar 1: Authentic Ingredients{%- endcomment -%}
+    <div data-reveal>
+      <p class="font-raw text-primary" style="font-size: 1.125rem; margin-bottom: 1rem;">
+        Authentic Ingredients
+      </p>
+      <p class="text-foreground" style="font-family: var(--font-body); font-size: 1rem; line-height: 1.8; opacity: 0.9;">
+        We source from the origins. Thai chilies from Thailand. Moroccan peppers from Morocco. Mexican spices from the markets where Arik found them. No shortcuts, no substitutes.
+      </p>
+    </div>
+
+    {%- comment -%}Pillar 2: Chef-Level Craft{%- endcomment -%}
+    <div data-reveal data-reveal-delay="150ms">
+      <p class="font-raw text-primary" style="font-size: 1.125rem; margin-bottom: 1rem;">
+        Chef-Level Craft
+      </p>
+      <p class="text-foreground" style="font-family: var(--font-body); font-size: 1rem; line-height: 1.8; opacity: 0.9;">
+        Every batch is made with the care and precision of a professional kitchen. Small batches. Tested recipes. Hand-crafted with respect for tradition.
+      </p>
+    </div>
+
+    {%- comment -%}Pillar 3: Zero Shortcuts{%- endcomment -%}
+    <div data-reveal data-reveal-delay="300ms">
+      <p class="font-raw text-primary" style="font-size: 1.125rem; margin-bottom: 1rem;">
+        Zero Shortcuts
+      </p>
+      <p class="text-foreground" style="font-family: var(--font-body); font-size: 1rem; line-height: 1.8; opacity: 0.9;">
+        No preservatives. No fillers. No artificial anything. If it doesn't belong in the sauce, it doesn't go in the bottle.
+      </p>
+    </div>
+
+  </div>
+
+  {%- comment -%}CTA Button{%- endcomment -%}
+  <div data-reveal data-reveal-delay="400ms" style="text-align: center; margin-top: 4rem;">
+    <a href="/collections/all" style="display: inline-block; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 1rem 2rem; text-decoration: none; font-family: var(--font-display); font-size: 1.125rem; letter-spacing: 0.1em; text-transform: uppercase; transition: opacity 0.2s ease;">
+      Shop the Collection
+    </a>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Saucy Story Content"
+}
+{% endschema %}

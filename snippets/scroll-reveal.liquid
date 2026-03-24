@@ -1,0 +1,11 @@
+{%- comment -%}
+  Scroll Reveal Snippet
+  Outputs opening tag with data-reveal attribute for scroll animations
+
+  Usage in templates:
+  {% render 'scroll-reveal', delay: '200ms' %}
+  Your content here
+  </div>
+{%- endcomment -%}
+
+<{{ tag | default: 'div' }} data-reveal{% if delay %} data-reveal-delay="{{ delay }}"{% endif %}>

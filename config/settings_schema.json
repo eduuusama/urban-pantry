@@ -1,0 +1,38 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Urban Pantry",
+    "theme_version": "1.0.0",
+    "theme_author": "Urban Pantry",
+    "theme_documentation_url": "https://eaturbanpantry.com",
+    "theme_support_url": "mailto:info@eaturbanpantry.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#c0392b"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent color",
+        "default": "#f07d00"
+      }
+    ]
+  },
+  {
+    "name": "Announcement bar",
+    "settings": [
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement text",
+        "default": "FREE SHIPPING on orders over $30"
+      }
+    ]
+  }
+]

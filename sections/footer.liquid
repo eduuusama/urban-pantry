@@ -1,0 +1,86 @@
+<footer class="border-t border-border py-16 grain-overlay">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+
+      {%- comment -%} Logo & Tagline {%- endcomment -%}
+      <div>
+        <img
+          src="{{ 'logo.webp' | asset_url }}"
+          alt="Urban Pantry"
+          style="height: 80px; width: auto; margin-bottom: 1rem;"
+        />
+        <p class="font-raw text-2xl text-foreground mb-4">Urban Pantry</p>
+        <p class="text-muted-foreground text-sm font-light leading-relaxed">
+          Chef-crafted hot sauces that honor the flavor of each cuisine. Vegan. Gluten-free. Sugar-free. Nothing artificial. Ever.
+        </p>
+      </div>
+
+      {%- comment -%} Navigation {%- endcomment -%}
+      <div>
+        <h3 class="font-display text-lg tracking-widest uppercase text-foreground mb-6">Navigation</h3>
+        <ul class="space-y-3">
+          {%- assign nav_links = "Home,Shop,Saucy Story,Find Us,Contact" | split: "," -%}
+          {%- assign nav_paths = "/,/collections/all,/pages/saucy-story,/pages/find-us,/pages/contact" | split: "," -%}
+          {%- for i in (0..4) -%}
+            <li>
+              <a
+                href="{{ nav_paths[i] }}"
+                class="text-muted-foreground hover:text-primary transition-colors text-sm"
+              >
+                {{ nav_links[i] }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- comment -%} Contact & Social {%- endcomment -%}
+      <div>
+        <h3 class="font-display text-lg tracking-widest uppercase text-foreground mb-6">Contact</h3>
+        <div class="space-y-4">
+          <p>
+            <a
+              href="mailto:info@eaturbanpantry.com"
+              class="text-muted-foreground hover:text-primary transition-colors text-sm"
+            >
+              info@eaturbanpantry.com
+            </a>
+          </p>
+          <div class="flex gap-4">
+            <a
+              href="https://instagram.com/eaturbanpantry"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-muted-foreground hover:text-primary transition-colors text-sm"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://facebook.com/eaturbanpantry"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-muted-foreground hover:text-primary transition-colors text-sm"
+            >
+              Facebook
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {%- comment -%} Copyright {%- endcomment -%}
+    <div class="border-t border-border pt-8 text-center">
+      <p class="text-muted-foreground text-sm">
+        © 2026 Urban Pantry. Hot sauces, not hurt sauces.
+      </p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}

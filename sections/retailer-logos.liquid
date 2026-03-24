@@ -1,0 +1,47 @@
+<section class="py-24 px-6 bg-secondary grain-overlay">
+  <div class="max-w-7xl mx-auto">
+
+    {%- comment -%} Heading {%- endcomment -%}
+    <div class="text-center mb-12">
+      <h2 class="font-display text-6xl text-foreground mb-4">Find Us in Your Favorite Retailer</h2>
+      <p class="text-muted-foreground font-light">Available at Kroger family stores and select boutique retailers nationwide</p>
+    </div>
+
+    {%- comment -%} Retailer Logos Marquee {%- endcomment -%}
+    <div class="overflow-hidden">
+      <div class="animate-marquee-fast flex gap-6">
+        {%- assign retailers = "frys,king-soopers,city-market,fred-meyer,ridleys,jungle-jims,food-garden,mcguckins,lolitas,maceys,soulberry" | split: "," -%}
+
+        {%- for i in (1..2) -%}
+          {%- for retailer in retailers -%}
+            <div class="border border-border rounded-sm bg-card px-8 py-4 flex-shrink-0 flex items-center justify-center min-w-[180px] h-20">
+              <img
+                src="{{ 'retailers/' | append: retailer | append: '.webp' | asset_url }}"
+                alt="{{ retailer }}"
+                class="max-h-14 w-auto object-contain"
+              />
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Call to Action {%- endcomment -%}
+    <div class="text-center mt-12">
+      <a
+        href="/pages/find-us"
+        class="text-primary border-b-2 border-primary hover:opacity-75 transition-opacity font-body text-sm tracking-wide"
+      >
+        Find the Heat Near You →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Retailer Logos",
+  "settings": []
+}
+{% endschema %}

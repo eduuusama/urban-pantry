@@ -1,0 +1,70 @@
+{%- comment -%}
+  Find Us Section
+  Store locator page with retailer logos and Stockist embed
+{%- endcomment -%}
+
+{%- comment -%}HERO SECTION{%- endcomment -%}
+<section class="grain-overlay" style="padding: 6rem 1rem; text-align: center; min-height: 40vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <div data-reveal style="max-width: 800px; margin: 0 auto;">
+    <h1 class="font-display text-foreground" style="font-size: clamp(2.5rem, 10vw, 3.75rem); line-height: 1.2; margin-bottom: 1.5rem;">
+      Find the Heat Near You
+    </h1>
+    <p class="text-muted-foreground" style="font-family: var(--font-body); font-size: 1.125rem; font-weight: 300;">
+      Urban Pantry is available at Kroger family stores and select specialty retailers across the country.
+    </p>
+  </div>
+</section>
+
+{%- comment -%}RETAILER LOGO GRID{%- endcomment -%}
+<section style="padding: 6rem 1rem; max-width: 1400px; margin: 0 auto;">
+
+  <div style="text-align: center; margin-bottom: 3rem;">
+    <p class="font-raw text-primary" style="font-size: 1.125rem;">
+      Where to Shop
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; align-items: center;">
+
+    {%- assign retailers = 'frys,king-soopers,city-market,fred-meyer,ridleys,jungle-jims,food-garden,mcguckins,lolitas,maceys,soulberry' | split: ',' -%}
+
+    {%- for retailer in retailers -%}
+      <div data-reveal data-reveal-delay="{{ forloop.index0 | times: 50 }}ms" style="display: flex; align-items: center; justify-content: center; padding: 1.5rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); transition: transform 0.3s ease;">
+        <img src="{{ retailer | append: '.webp' | prepend: 'retailers/' | asset_url }}" alt="{{ retailer | capitalize }}" style="max-height: 80px; max-width: 100%; object-fit: contain;">
+      </div>
+    {%- endfor -%}
+
+  </div>
+
+</section>
+
+{%- comment -%}STOCKIST STORE LOCATOR{%- endcomment -%}
+<section style="margin: 4rem auto; max-width: 1200px; padding: 0 1rem;">
+  <div data-reveal>
+    <script src="https://stockist.co/embed/v1/widget.min.js" defer></script>
+    <stockist-store-locator tag="urban-pantry"></stockist-store-locator>
+  </div>
+</section>
+
+{%- comment -%}CTA SECTION{%- endcomment -%}
+<section style="padding: 4rem 1rem; background: hsl(var(--secondary)); text-align: center;">
+  <div data-reveal style="max-width: 600px; margin: 0 auto;">
+    <p class="text-foreground" style="font-family: var(--font-body); font-size: 1.0625rem; margin-bottom: 2rem;">
+      Don't see your city? Let us know you want Urban Pantry where you live.
+    </p>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+      <a href="/pages/contact" style="display: inline-block; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 0.875rem 1.75rem; text-decoration: none; font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.05em; transition: opacity 0.2s ease;">
+        Contact Us
+      </a>
+      <a href="https://eaturbanpantry.com" target="_blank" style="display: inline-block; background: transparent; color: hsl(var(--primary)); border: 2px solid hsl(var(--primary)); padding: 0.75rem 1.75rem; text-decoration: none; font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.05em; transition: all 0.2s ease;">
+        Shop Online
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Find Us"
+}
+{% endschema %}

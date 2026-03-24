@@ -1,0 +1,416 @@
+/* ============================================================
+   Urban Pantry — Shopify Theme CSS
+   Ported from src/index.css (React/Lovable build)
+   ============================================================ */
+
+/* ── Google Fonts are loaded in layout/theme.liquid ── */
+
+/* ── CSS Custom Properties ── */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 220 20% 10%;
+
+  --card: 0 0% 98%;
+  --card-foreground: 220 20% 10%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 20% 10%;
+
+  --primary: 4 74% 50%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 220 15% 94%;
+  --secondary-foreground: 220 20% 15%;
+
+  --muted: 220 12% 95%;
+  --muted-foreground: 220 10% 40%;
+
+  --accent: 30 95% 50%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 220 12% 88%;
+  --input: 220 12% 88%;
+  --ring: 4 74% 50%;
+
+  --radius: 0.25rem;
+
+  --hot-yellow: 50 100% 45%;
+  --hot-orange: 25 100% 50%;
+  --hot-red: 4 74% 50%;
+
+  --glow-italian: 39 74% 49%;
+  --glow-mideast: 50 100% 40%;
+  --glow-mexican: 23 95% 55%;
+  --glow-asian: 1 62% 55%;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-raw: 'Permanent Marker', cursive;
+  --font-body: 'Barlow', sans-serif;
+}
+
+/* ── Base Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-body);
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+p { margin: 0; }
+
+img { display: block; max-width: 100%; }
+
+a { text-decoration: none; color: inherit; }
+
+button { cursor: pointer; border: none; background: none; padding: 0; font: inherit; }
+
+/* ── Typography helpers ── */
+.font-display { font-family: var(--font-display); }
+.font-raw     { font-family: var(--font-raw); }
+.font-body    { font-family: var(--font-body); }
+
+/* ── Accessibility ── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  padding: 1rem 2rem;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-to-content:focus {
+  top: 0.5rem;
+}
+
+/* ── Grain texture overlay ── */
+.grain-overlay {
+  position: relative;
+}
+.grain-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+.grain-heavy::after {
+  opacity: 0.08;
+}
+
+/* ── Scrolling marquee ── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.animate-marquee-fast {
+  animation: marquee 20s linear infinite;
+}
+.animate-marquee:hover,
+.animate-marquee-fast:hover {
+  animation-play-state: paused;
+}
+
+/* ── Hero word reveal ── */
+@keyframes word-reveal {
+  0%   { opacity: 0; transform: translateY(100%) rotateX(-80deg); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+.animate-word-reveal {
+  animation: word-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* ── Hero CTA pulse ── */
+@keyframes cta-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.04); opacity: 0.92; }
+}
+.animate-cta-pulse {
+  animation: cta-pulse 2.5s ease-in-out infinite;
+}
+
+/* ── Scale-in (promo popup) ── */
+@keyframes scale-in {
+  0%   { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in {
+  animation: scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Page enter ── */
+@keyframes page-enter {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: page-enter 0.4s ease-out forwards;
+}
+
+/* ── Mobile menu slide-in ── */
+@keyframes slide-in-right {
+  0%   { transform: translateX(100%); opacity: 0; }
+  100% { transform: translateX(0);    opacity: 1; }
+}
+@keyframes slide-in-link {
+  0%   { transform: translateX(40px); opacity: 0; }
+  100% { transform: translateX(0);    opacity: 1; }
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-slide-in-link {
+  animation: slide-in-link 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* ── Testimonial crossfade ── */
+@keyframes crossfade-in {
+  0%   { opacity: 0; transform: scale(0.97); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-crossfade-in {
+  animation: crossfade-in 0.5s ease-out forwards;
+}
+
+/* ── Product card glow effects ── */
+.product-card:hover .glow-italian,
+.glow-italian-active { box-shadow: 0 8px 40px -8px hsl(var(--glow-italian) / 0.5); }
+.product-card:hover .glow-mideast,
+.glow-mideast-active { box-shadow: 0 8px 40px -8px hsl(var(--glow-mideast) / 0.5); }
+.product-card:hover .glow-mexican,
+.glow-mexican-active { box-shadow: 0 8px 40px -8px hsl(var(--glow-mexican) / 0.5); }
+.product-card:hover .glow-asian,
+.glow-asian-active   { box-shadow: 0 8px 40px -8px hsl(var(--glow-asian)   / 0.5); }
+
+/* ── Section divider — spray-paint torn edge ── */
+.section-divider {
+  position: relative;
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(var(--primary) / 0.4) 8%,
+    hsl(var(--primary)) 25%,
+    hsl(var(--accent)) 55%,
+    hsl(var(--primary) / 0.7) 80%,
+    transparent 100%
+  );
+  mask-image: url("data:image/svg+xml,%3Csvg width='1200' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4 Q50 0 100 4 Q150 8 200 3 Q250 0 300 5 Q350 8 400 3 Q450 0 500 5 Q550 7 600 4 Q650 1 700 5 Q750 8 800 3 Q850 0 900 5 Q950 7 1000 4 Q1050 1 1100 5 Q1150 8 1200 4' stroke='white' stroke-width='8' fill='none'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='1200' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4 Q50 0 100 4 Q150 8 200 3 Q250 0 300 5 Q350 8 400 3 Q450 0 500 5 Q550 7 600 4 Q650 1 700 5 Q750 8 800 3 Q850 0 900 5 Q950 7 1000 4 Q1050 1 1100 5 Q1150 8 1200 4' stroke='white' stroke-width='8' fill='none'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+}
+
+/* ── Typography styles ── */
+.stencil-text {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.raw-text {
+  font-family: var(--font-raw);
+  letter-spacing: -0.01em;
+  transform: rotate(-1deg);
+  display: inline-block;
+}
+
+.distressed-text {
+  text-shadow:
+    1px 0 0 hsl(var(--primary-foreground) / 0.1),
+    -1px 0 0 hsl(var(--primary-foreground) / 0.05);
+  transform: skewX(-0.5deg);
+}
+
+/* ── Spray quote marks ── */
+.spray-quote {
+  position: relative;
+}
+.spray-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -0.6em;
+  left: -0.5em;
+  font-family: var(--font-raw);
+  font-size: 8em;
+  line-height: 1;
+  color: hsl(var(--primary) / 0.1);
+  pointer-events: none;
+  z-index: 0;
+  transform: rotate(-5deg);
+}
+
+/* ── Nav compact on scroll ── */
+.site-header {
+  transition: all 0.3s ease;
+}
+.site-header.scrolled {
+  box-shadow: 0 4px 24px hsl(var(--background) / 0.5);
+}
+.site-header.scrolled .nav-inner {
+  height: 3rem;
+}
+.site-header.scrolled .nav-logo {
+  height: 1.75rem;
+}
+.site-header .nav-inner {
+  height: 4rem;
+  transition: height 0.3s ease;
+}
+.site-header .nav-logo {
+  height: 2.5rem;
+  transition: height 0.3s ease;
+}
+
+/* ── Mobile nav overlay ── */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: hsl(var(--background));
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-nav-overlay.is-open {
+  display: flex;
+  animation: slide-in-right 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Cart drawer ── */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 28rem;
+  background: hsl(var(--background));
+  border-left: 1px solid hsl(var(--border));
+  z-index: 150;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.cart-drawer.is-open {
+  transform: translateX(0);
+}
+.cart-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 149;
+  background: hsl(var(--foreground) / 0.4);
+  backdrop-filter: blur(2px);
+}
+.cart-overlay.is-open {
+  display: block;
+}
+
+/* ── Scroll reveal ── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Flavor bars ── */
+.flavor-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  width: 0;
+  transition: width 1s ease-out;
+}
+
+/* ── Promo popup ── */
+.promo-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: hsl(var(--foreground) / 0.5);
+  backdrop-filter: blur(4px);
+}
+.promo-popup-overlay.is-open {
+  display: flex;
+}
+
+/* ── Touch-friendly tap targets ── */
+@media (max-width: 768px) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ── Mobile text sizes ── */
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  p, span, li { font-size: max(1rem, 16px); }
+}
+
+/* ── Utility: color tokens ── */
+.bg-background    { background-color: hsl(var(--background)); }
+.bg-foreground    { background-color: hsl(var(--foreground)); }
+.bg-primary       { background-color: hsl(var(--primary)); }
+.bg-accent        { background-color: hsl(var(--accent)); }
+.bg-secondary     { background-color: hsl(var(--secondary)); }
+.bg-card          { background-color: hsl(var(--card)); }
+.bg-muted         { background-color: hsl(var(--muted)); }
+
+.text-foreground      { color: hsl(var(--foreground)); }
+.text-primary         { color: hsl(var(--primary)); }
+.text-accent          { color: hsl(var(--accent)); }
+.text-muted-foreground { color: hsl(var(--muted-foreground)); }
+.text-primary-foreground { color: hsl(var(--primary-foreground)); }
+
+.border-border  { border-color: hsl(var(--border)); }
+.border-primary { border-color: hsl(var(--primary)); }

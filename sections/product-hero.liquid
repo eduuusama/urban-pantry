@@ -1,0 +1,249 @@
+<section style="max-width: 1280px; margin: 0 auto; padding: 3rem 1rem;">
+
+  <!-- Breadcrumb -->
+  <a href="/collections/all" class="font-display text-muted-foreground" style="font-size: 0.875rem; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; display: inline-block; margin-bottom: 2rem;">
+    ← Back to Shop
+  </a>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
+
+    <!-- IMAGE COLUMN -->
+    <div>
+      {% assign accent_color = product.metafields.custom.accent_color.value %}
+      {% assign is_bundle = false %}
+      {% for tag in product.tags %}
+        {% if tag == 'bundle' or tag == 'bundles' %}
+          {% assign is_bundle = true %}
+        {% endif %}
+      {% endfor %}
+
+      <div id="product-main-image-wrap" style="aspect-ratio: 1; border-radius: 0.375rem; overflow: hidden; background: linear-gradient(135deg, rgba({{ accent_color | remove: '#' | slice: 0, 2 | hex_to_rgb }}, 0.08), rgba({{ accent_color | remove: '#' | slice: 2, 2 | hex_to_rgb }}, 0.08)); position: relative; display: flex; align-items: center; justify-content: center;">
+
+        {% if product.metafields.custom.badge.value %}
+          <div style="position: absolute; top: 1rem; right: 1rem; font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 0.75rem; color: white; background-color: {{ accent_color }};">
+            {{ product.metafields.custom.badge.value }}
+          </div>
+        {% endif %}
+
+        <img id="product-main-image" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" style="height: 85%; width: auto; object-fit: contain; filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.1));">
+      </div>
+
+      <!-- Thumbnails -->
+      {% if product.images.size > 1 %}
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+          {% for image in product.images %}
+            <button data-thumb data-src="{{ image | image_url: width: 600 }}" data-is-bottle="{% if forloop.first %}true{% else %}false{% endif %}" style="flex: 1; aspect-ratio: 1; border: 2px solid {% if forloop.first %}hsl(var(--foreground)){% else %}hsl(var(--border)){% endif %}; overflow: hidden; border-radius: 0.375rem; background: white; cursor: pointer; transition: border-color 0.3s ease;">
+              <img src="{{ image | image_url: width: 100 }}" alt="Product image {{ forloop.index }}" style="width: 100%; height: 100%; object-fit: contain; padding: 0.25rem;">
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- DETAILS COLUMN -->
+    <div>
+      <!-- Subtitle -->
+      {% if product.metafields.custom.subtitle.value %}
+        <p class="font-raw" style="font-size: 1.125rem; color: {{ accent_color }}; margin: 0 0 0.5rem 0; transform: rotate(-1deg);">
+          {{ product.metafields.custom.subtitle.value }}
+        </p>
+      {% endif %}
+
+      <!-- Title -->
+      <h1 class="font-display text-foreground" style="font-size: 3.5rem; margin: 0 0 1rem 0; line-height: 1.1; letter-spacing: -0.02em;">
+        {{ product.title }}
+      </h1>
+
+      <!-- Price & Size -->
+      <div style="margin: 1.5rem 0;">
+        <p class="font-display text-foreground" style="font-size: 2rem; margin: 0.5rem 0;">
+          {{ product.price | money }}
+        </p>
+        {% if product.metafields.custom.size.value %}
+          <p class="font-body text-muted-foreground" style="margin: 0.5rem 0;">
+            {{ product.metafields.custom.size.value }}
+          </p>
+        {% else %}
+          <p class="font-body text-muted-foreground" style="margin: 0.5rem 0;">
+            5 FL OZ (148 ml)
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Heat Level Dots (if not bundle) -->
+      {% unless is_bundle %}
+        {% assign heat = product.metafields.custom.heat_level.value | plus: 0 %}
+        <div style="margin: 2rem 0;">
+          <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0;">Heat</p>
+          <div style="display: flex; gap: 0.5rem;">
+            {% for i in (1..5) %}
+              <div style="width: 1.25rem; height: 1.25rem; border-radius: 50%; {% if i <= heat %}background-color: {{ accent_color }};{% else %}border: 2px solid hsl(var(--border)); background: transparent;{% endif %}"></div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Key Ingredients -->
+        {% if product.metafields.custom.key_ingredients.value %}
+          <div style="margin: 2rem 0;">
+            <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0;">Key Ingredients</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+              {% for ingredient in product.metafields.custom.key_ingredients.value %}
+                <span class="font-display" style="font-size: 0.75rem; letter-spacing: 0.15em; border: 1px solid hsl(var(--border)); border-radius: 0.25rem; padding: 0.5rem 0.75rem; color: hsl(var(--foreground));">{{ ingredient }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Perfect Pairings -->
+        {% if product.metafields.custom.perfect_pairings.value %}
+          <div style="margin: 2rem 0;">
+            <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0;">Perfect Pairings</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+              {% for pairing in product.metafields.custom.perfect_pairings.value %}
+                <span class="font-display" style="font-size: 0.75rem; letter-spacing: 0.15em; border: 1px solid hsl(var(--border)); border-radius: 0.25rem; padding: 0.5rem 0.75rem; color: hsl(var(--foreground));">{{ pairing }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      {% endunless %}
+
+      <!-- Add to Cart Button -->
+      <button class="btn-add-to-cart animate-cta-pulse font-display" data-variant-id="{{ product.selected_or_first_available_variant.id }}" style="font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 1rem 2.5rem; width: 100%; border: none; border-radius: 0.375rem; cursor: pointer; margin-top: 2rem; font-weight: 600; transition: all 0.3s ease;">
+        Add to Cart
+      </button>
+
+      <!-- Bundle Picker (Beat Box / Freestyler) -->
+      {% if product.handle == 'beat-box-1' or product.handle == 'beat-box' or product.handle contains 'freestyler' or product.handle contains 'two-pack' %}
+        {% assign pick_count = 3 %}
+        {% if product.handle contains 'freestyler' or product.handle contains 'two-pack' %}
+          {% assign pick_count = 2 %}
+        {% endif %}
+
+        <div data-bundle-picker data-pick-count="{{ pick_count }}" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid hsl(var(--border));">
+          <h3 class="font-display text-foreground" style="font-size: 1.5rem; margin: 0 0 1.5rem 0;">Pick Your {{ pick_count }}</h3>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+            <!-- Bomba -->
+            <button data-sauce-option data-sauce-id="bomba-sauce" data-sauce-name="Bomba" style="border: 2px solid hsl(var(--border)); border-radius: 0.375rem; padding: 1rem; text-align: center; cursor: pointer; background: white; transition: all 0.3s ease;" onmouseover="this.style.borderColor = '#D79523';" onmouseout="this.style.borderColor = 'hsl(var(--border))';">
+              <img src="{{ 'bomba-sauce.webp' | asset_url }}" alt="Bomba" style="width: 100%; height: 120px; object-fit: contain; margin-bottom: 0.75rem;">
+              <p class="font-raw" style="font-size: 0.875rem; color: #D79523; margin: 0 0 0.25rem 0;">The Italian One</p>
+              <p class="font-display" style="font-size: 0.875rem; letter-spacing: 0.1em; color: hsl(var(--foreground)); margin: 0 0 0.5rem 0;">Bomba</p>
+              <p class="font-display" style="font-size: 1rem; color: hsl(var(--primary)); margin: 0;">$7</p>
+            </button>
+
+            <!-- Mo'Rockin -->
+            <button data-sauce-option data-sauce-id="mo-rockin-sauce" data-sauce-name="Mo'Rockin" style="border: 2px solid hsl(var(--border)); border-radius: 0.375rem; padding: 1rem; text-align: center; cursor: pointer; background: white; transition: all 0.3s ease;" onmouseover="this.style.borderColor = '#C8A800';" onmouseout="this.style.borderColor = 'hsl(var(--border))';">
+              <img src="{{ 'morockin-sauce.webp' | asset_url }}" alt="Mo'Rockin" style="width: 100%; height: 120px; object-fit: contain; margin-bottom: 0.75rem;">
+              <p class="font-raw" style="font-size: 0.875rem; color: #C8A800; margin: 0 0 0.25rem 0;">The Mid-East One</p>
+              <p class="font-display" style="font-size: 0.875rem; letter-spacing: 0.1em; color: hsl(var(--foreground)); margin: 0 0 0.5rem 0;">Mo'Rockin</p>
+              <p class="font-display" style="font-size: 1rem; color: hsl(var(--primary)); margin: 0;">$7</p>
+            </button>
+
+            <!-- Piquin Hot -->
+            <button data-sauce-option data-sauce-id="piquin-hot" data-sauce-name="Piquin Hot" style="border: 2px solid hsl(var(--border)); border-radius: 0.375rem; padding: 1rem; text-align: center; cursor: pointer; background: white; transition: all 0.3s ease;" onmouseover="this.style.borderColor = '#FA711B';" onmouseout="this.style.borderColor = 'hsl(var(--border))';">
+              <img src="{{ 'piquin-hot-sauce.webp' | asset_url }}" alt="Piquin Hot" style="width: 100%; height: 120px; object-fit: contain; margin-bottom: 0.75rem;">
+              <p class="font-raw" style="font-size: 0.875rem; color: #FA711B; margin: 0 0 0.25rem 0;">The Mexican One</p>
+              <p class="font-display" style="font-size: 0.875rem; letter-spacing: 0.1em; color: hsl(var(--foreground)); margin: 0 0 0.5rem 0;">Piquin Hot</p>
+              <p class="font-display" style="font-size: 1rem; color: hsl(var(--primary)); margin: 0;">$7</p>
+            </button>
+
+            <!-- Sambal-istic -->
+            <button data-sauce-option data-sauce-id="sambal-istic-sauce" data-sauce-name="Sambal-istic" style="border: 2px solid hsl(var(--border)); border-radius: 0.375rem; padding: 1rem; text-align: center; cursor: pointer; background: white; transition: all 0.3s ease;" onmouseover="this.style.borderColor = '#D24843';" onmouseout="this.style.borderColor = 'hsl(var(--border))';">
+              <img src="{{ 'sambal-istic-sauce.webp' | asset_url }}" alt="Sambal-istic" style="width: 100%; height: 120px; object-fit: contain; margin-bottom: 0.75rem;">
+              <p class="font-raw" style="font-size: 0.875rem; color: #D24843; margin: 0 0 0.25rem 0;">The Asian One</p>
+              <p class="font-display" style="font-size: 0.875rem; letter-spacing: 0.1em; color: hsl(var(--foreground)); margin: 0 0 0.5rem 0;">Sambal-istic</p>
+              <p class="font-display" style="font-size: 1rem; color: hsl(var(--primary)); margin: 0;">$7</p>
+            </button>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Product JSON-LD (for sauce products, not bundles) -->
+  {% unless is_bundle %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "{{ product.title | escape }}",
+      "description": "{{ product.metafields.custom.short_description.value | escape }}",
+      "brand": { "@type": "Brand", "name": "Urban Pantry" },
+      "offers": {
+        "@type": "Offer",
+        "price": "{{ product.price | money_without_currency }}",
+        "priceCurrency": "USD",
+        "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}"
+      }
+    }
+    </script>
+  {% endunless %}
+</section>
+
+<!-- Mobile Fixed Bar -->
+<div style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: hsl(var(--background)); border-top: 1px solid hsl(var(--border)); padding: 1rem; z-index: 50; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;">
+  <div>
+    <p class="font-display text-foreground" style="margin: 0; font-size: 0.875rem;">{{ product.title }}</p>
+    <p class="font-display text-primary" style="margin: 0.25rem 0 0 0; font-size: 1.25rem;">{{ product.price | money }}</p>
+  </div>
+  <button class="btn-add-to-cart font-display" data-variant-id="{{ product.selected_or_first_available_variant.id }}" style="font-size: 0.875rem; letter-spacing: 0.15em; text-transform: uppercase; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 0.75rem 1.5rem; border: none; border-radius: 0.375rem; cursor: pointer;">
+    Add
+  </button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Thumbnail switching
+  const thumbnails = document.querySelectorAll('[data-thumb]');
+  const mainImage = document.getElementById('product-main-image');
+
+  thumbnails.forEach(thumb => {
+    thumb.addEventListener('click', function() {
+      const src = this.getAttribute('data-src');
+      mainImage.src = src;
+
+      thumbnails.forEach(t => {
+        t.style.borderColor = 'hsl(var(--border))';
+      });
+      this.style.borderColor = 'hsl(var(--foreground))';
+    });
+  });
+
+  // Mobile fixed bar show/hide (less than 768px)
+  const mobileBar = document.querySelector('div[style*="position: fixed"]');
+  if (window.innerWidth < 768 && mobileBar) {
+    mobileBar.style.display = 'grid';
+  }
+
+  // Bundle picker logic
+  const bundlePicker = document.querySelector('[data-bundle-picker]');
+  if (bundlePicker) {
+    const pickCount = parseInt(bundlePicker.getAttribute('data-pick-count'));
+    const sauceOptions = document.querySelectorAll('[data-sauce-option]');
+    const selectedSauces = [];
+
+    sauceOptions.forEach(option => {
+      option.addEventListener('click', function(e) {
+        e.preventDefault();
+        const sauceId = this.getAttribute('data-sauce-id');
+        const index = selectedSauces.indexOf(sauceId);
+
+        if (index > -1) {
+          selectedSauces.splice(index, 1);
+          this.style.borderColor = 'hsl(var(--border))';
+        } else if (selectedSauces.length < pickCount) {
+          selectedSauces.push(sauceId);
+          this.style.borderColor = 'hsl(var(--primary))';
+        }
+      });
+    });
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Product Hero",
+  "settings": []
+}
+{% endschema %}

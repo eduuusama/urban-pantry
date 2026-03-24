@@ -1,0 +1,148 @@
+<div class="cart-drawer" id="cart-drawer">
+  {%- comment -%} Cart Drawer Header {%- endcomment -%}
+  <div class="flex items-center justify-between p-6 border-b border-border">
+    <div>
+      <h2 class="font-display text-2xl text-foreground">Shopping Cart</h2>
+      <p class="text-muted-foreground text-sm mt-1">{{ cart.item_count }} item{{ cart.item_count | pluralize }}</p>
+    </div>
+    <button
+      id="cart-drawer-close"
+      class="text-foreground hover:text-muted-foreground"
+      aria-label="Close cart"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  {%- comment -%} Cart Content {%- endcomment -%}
+  <div class="flex-1 overflow-y-auto">
+    {%- if cart.item_count > 0 -%}
+      <div class="divide-y divide-border">
+        {%- for item in cart.line_items -%}
+          <div class="p-6 flex gap-4">
+            {%- comment -%} Product Image {%- endcomment -%}
+            <a href="{{ item.url }}" class="flex-shrink-0 w-20 h-20 bg-card rounded overflow-hidden">
+              {%- if item.image -%}
+                {{ item.image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+              {%- endif -%}
+            </a>
+
+            {%- comment -%} Product Details {%- endcomment -%}
+            <div class="flex-1 flex flex-col">
+              <h3 class="font-display text-sm text-foreground">
+                <a href="{{ item.url }}" class="hover:text-primary transition-colors">{{ item.title }}</a>
+              </h3>
+              {%- if item.variant.title != "Default Title" -%}
+                <p class="text-muted-foreground text-xs mt-1">{{ item.variant.title }}</p>
+              {%- endif -%}
+              <p class="font-display text-lg text-primary mt-2">{{ item.price | money }}</p>
+
+              {%- comment -%} Quantity Controls {%- endcomment -%}
+              <div class="flex items-center gap-2 mt-3">
+                <button
+                  class="w-6 h-6 flex items-center justify-center border border-border rounded text-muted-foreground hover:text-foreground transition-colors"
+                  data-cart-change="minus"
+                  data-line-index="{{ forloop.index0 }}"
+                  type="button"
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <span class="w-8 text-center text-foreground">{{ item.quantity }}</span>
+                <button
+                  class="w-6 h-6 flex items-center justify-center border border-border rounded text-muted-foreground hover:text-foreground transition-colors"
+                  data-cart-change="plus"
+                  data-line-index="{{ forloop.index0 }}"
+                  type="button"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+
+              {%- comment -%} Remove Button {%- endcomment -%}
+              <button
+                class="text-xs text-muted-foreground hover:text-accent mt-3 transition-colors text-left"
+                data-cart-remove
+                data-line-index="{{ forloop.index0 }}"
+                type="button"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      {%- comment -%} Empty State {%- endcomment -%}
+      <div class="flex flex-col items-center justify-center py-20 px-6">
+        <svg class="w-16 h-16 text-muted-foreground mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        <p class="text-muted-foreground text-center font-body">Your cart is empty</p>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Cart Footer {%- endcomment -%}
+  {%- if cart.item_count > 0 -%}
+    <div class="border-t border-border p-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="text-muted-foreground">Subtotal</span>
+        <span class="font-display text-xl text-foreground">{{ cart.total_price | money }}</span>
+      </div>
+      <p class="text-xs text-muted-foreground">Taxes and shipping calculated at checkout.</p>
+      <a
+        href="{{ routes.cart_url }}/checkout"
+        class="block w-full text-center bg-primary text-primary-foreground font-display text-sm tracking-widest px-6 py-3 rounded transition-opacity hover:opacity-90"
+      >
+        Proceed to Checkout
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background-color: hsl(var(--background));
+    border-left: 1px solid hsl(var(--border));
+    display: flex;
+    flex-direction: column;
+    z-index: 35;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .cart-drawer.is-open {
+    transform: translateX(0);
+  }
+
+  @media (max-width: 640px) {
+    .cart-drawer {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    const drawer = document.getElementById('cart-drawer');
+    const closeBtn = document.getElementById('cart-drawer-close');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        drawer.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+    }
+  })();
+</script>

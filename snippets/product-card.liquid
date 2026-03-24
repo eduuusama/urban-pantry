@@ -1,0 +1,52 @@
+{% comment %}
+  Renders a product card for collections and cross-sell sections
+
+  Parameters:
+  - product (Shopify product object)
+{% endcomment %}
+
+{% assign accent_color = product.metafields.custom.accent_color.value %}
+
+<div style="border: 1px solid hsl(var(--border)); border-radius: 0.375rem; overflow: hidden; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)'; this.style.transform = 'translateY(-4px)';" onmouseout="this.style.boxShadow = 'none'; this.style.transform = 'translateY(0)';">
+
+  <!-- Image -->
+  <a href="{{ product.url }}" style="display: block; aspect-ratio: 1; overflow: hidden; background: linear-gradient(135deg, hsla(var(--secondary), 0.5), hsla(var(--background), 0.5)); position: relative;">
+    <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;">
+
+    {% if product.metafields.custom.badge.value %}
+      <span style="position: absolute; top: 1rem; right: 1rem; font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 0.75rem; color: white; background-color: {{ accent_color }};">
+        {{ product.metafields.custom.badge.value }}
+      </span>
+    {% endif %}
+  </a>
+
+  <!-- Details -->
+  <div style="padding: 1.5rem;">
+
+    <!-- Subtitle -->
+    {% if product.metafields.custom.subtitle.value %}
+      <p class="font-raw" style="font-size: 0.875rem; color: {{ accent_color }}; margin: 0 0 0.5rem 0; transform: rotate(-1deg);">
+        {{ product.metafields.custom.subtitle.value }}
+      </p>
+    {% endif %}
+
+    <!-- Title -->
+    <a href="{{ product.url }}" style="text-decoration: none;">
+      <h3 class="font-display text-foreground" style="font-size: 1.25rem; margin: 0 0 0.75rem 0; line-height: 1.2;">
+        {{ product.title }}
+      </h3>
+    </a>
+
+    <!-- Price -->
+    <p class="font-display text-primary" style="font-size: 1.25rem; margin: 0.75rem 0;">
+      {{ product.price | money }}
+    </p>
+
+    <!-- Add to Cart -->
+    <button class="btn-add-to-cart font-display" data-variant-id="{{ product.selected_or_first_available_variant.id }}" style="font-size: 0.875rem; letter-spacing: 0.15em; text-transform: uppercase; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 0.75rem 1.5rem; width: 100%; border: none; border-radius: 0.375rem; cursor: pointer; margin-top: 1rem; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.opacity = '0.9';" onmouseout="this.style.opacity = '1';">
+      Add to Cart
+    </button>
+
+  </div>
+
+</div>

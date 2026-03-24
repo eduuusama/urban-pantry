@@ -1,0 +1,78 @@
+<section class="py-24 px-6">
+  <div class="max-w-7xl mx-auto">
+
+    {%- comment -%} Section Heading {%- endcomment -%}
+    <div class="text-center mb-16">
+      <h2 class="font-display text-6xl lg:text-7xl text-foreground spray-quote">Word on the Street</h2>
+    </div>
+
+    {%- comment -%} Desktop Testimonials Grid {%- endcomment -%}
+    <div class="hidden md:grid grid-cols-3 gap-8">
+      {%- assign testimonials = "
+        These sauces don't cover up food — they elevate it. That's a huge difference.|Tanya F.,
+        Finally, a hot sauce that tastes like the real thing.|Melissa H.,
+        Each bottle nails the cuisine it represents.|David K.,
+        Sambal-istic is my stir-fry's new best friend.|Rachel K.,
+        Bomba turned my plain pasta into restaurant-level magic.|Emily R.,
+        I bought the Boom Box as a birthday present for my husband, I keep having to reorder. The whole family loves these sauces!|Maria Jones
+      " | split: "," -%}
+
+      {%- for testimonial in testimonials -%}
+        {%- assign quote_author = testimonial | split: "|" -%}
+        <div class="border border-border rounded-sm p-8 bg-card spray-quote">
+          <p class="font-body font-light text-muted-foreground mb-4 min-h-20">
+            "{{ quote_author[0] | strip }}"
+          </p>
+          <p class="font-display text-sm text-primary">{{ quote_author[1] | strip }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Mobile Carousel {%- endcomment -%}
+    <div class="md:hidden" data-testimonials-carousel>
+      <div class="relative">
+        {%- for testimonial in testimonials -%}
+          {%- assign quote_author = testimonial | split: "|" -%}
+          <div
+            class="carousel-slide border border-border rounded-sm p-8 bg-card spray-quote animate-crossfade-in"
+            style="{% if forloop.first %}opacity: 1;{% else %}opacity: 0; position: absolute; width: 100%;{% endif %}"
+          >
+            <p class="font-body font-light text-muted-foreground mb-4 min-h-20">
+              "{{ quote_author[0] | strip }}"
+            </p>
+            <p class="font-display text-sm text-primary">{{ quote_author[1] | strip }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Carousel Controls {%- endcomment -%}
+      <div class="flex items-center justify-center gap-6 mt-8">
+        <button data-carousel-prev class="text-muted-foreground hover:text-foreground transition-colors" type="button">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+
+        <div class="flex gap-2">
+          {%- for i in (0..5) -%}
+            <button data-carousel-dot="{{ i }}" class="w-2 h-2 rounded-full bg-border transition-colors hover:bg-primary" type="button"></button>
+          {%- endfor -%}
+        </div>
+
+        <button data-carousel-next class="text-muted-foreground hover:text-foreground transition-colors" type="button">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+<section style="padding: 6rem 1rem; max-width: 1280px; margin: 0 auto;">
+
+  <!-- Heading -->
+  <h2 class="font-display text-foreground text-center" style="font-size: 3rem; margin: 0 0 3rem 0;">What They're Saying</h2>
+
+  <!-- Reviews Grid -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+
+    {% for block in section.blocks %}
+      {% if block.type == 'review' %}
+        <div style="border: 1px solid hsl(var(--border)); border-radius: 0.375rem; padding: 2rem; background: white;">
+
+          <!-- Star Rating -->
+          <div style="margin-bottom: 1rem;">
+            {% render 'star-rating', stars: block.settings.stars, accent_color: product.metafields.custom.accent_color.value %}
+          </div>
+
+          <!-- Review Text -->
+          <p class="font-body text-muted-foreground" style="margin: 1rem 0; line-height: 1.8; font-style: italic;">
+            "{{ block.settings.review_text }}"
+          </p>
+
+          <!-- Reviewer Name -->
+          <p class="font-display text-primary" style="margin: 1rem 0 0 0; font-size: 0.875rem; letter-spacing: 0.1em;">
+            — {{ block.settings.reviewer_name }}
+          </p>
+
+        </div>
+      {% endif %}
+    {% endfor %}
+
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Product Reviews",
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer Name"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6
+}
+{% endschema %}

@@ -1,0 +1,52 @@
+{
+  "general": {
+    "404": {
+      "title": "Sauce Not Found",
+      "subtext": "This bottle must've rolled off the shelf.",
+      "link": "Back to Shop"
+    }
+  },
+  "layout": {
+    "cart": {
+      "title": "Shopping Cart",
+      "empty": "Your cart is empty",
+      "items_count": {
+        "one": "1 item",
+        "other": "{{ count }} items"
+      },
+      "checkout": "Checkout",
+      "total": "Total",
+      "remove": "Remove"
+    },
+    "header": {
+      "skip_to_content": "Skip to content",
+      "cart_count": "Cart ({{ count }})"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "heat_level": "Heat",
+      "back_to_shop": "Back to Shop"
+    }
+  },
+  "sections": {
+    "newsletter": {
+      "heading": "Stay in the Heat",
+      "subtext": "New sauces, chef tips, and exclusive deals — straight to your inbox.",
+      "placeholder": "your@email.com",
+      "button": "Subscribe",
+      "success": "You're in. Heat incoming."
+    },
+    "contact_form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send It",
+      "success": "Message received. We'll be in touch."
+    }
+  }
+}

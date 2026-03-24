@@ -1,0 +1,64 @@
+<section class="py-24 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+      {%- comment -%} Image {%- endcomment -%}
+      <div class="md:order-2" data-reveal>
+        <img
+          src="{{ 'chef-arik.webp' | asset_url }}"
+          alt="Chef Arik Markus"
+          class="w-full object-cover rounded"
+          style="aspect-ratio: 1 / 1;"
+        />
+      </div>
+
+      {%- comment -%} Text Content {%- endcomment -%}
+      <div class="md:order-1 space-y-6">
+        <p
+          class="font-raw text-sm lg:text-lg text-primary -rotate-1"
+          data-reveal
+        >
+          The Man Behind the Heat
+        </p>
+
+        <h2
+          class="font-display text-5xl lg:text-6xl text-foreground"
+          data-reveal
+        >
+          Chef Arik Markus
+        </h2>
+
+        <p
+          class="font-body text-muted-foreground font-light leading-relaxed"
+          data-reveal
+        >
+          Michelin-trained in New York City, Chef Arik spent years traveling the world's street food markets — from the spice bazaars of Marrakech to the night stalls of Bangkok. He built Urban Pantry with one mission: craft hot sauces that honor each cuisine's soul, not overpower it.
+        </p>
+
+        <p
+          class="font-body text-muted-foreground font-light leading-relaxed"
+          data-reveal
+        >
+          Every bottle is a love letter to the streets where these flavors were born — made with real ingredients, zero shortcuts, and the precision of fine dining.
+        </p>
+
+        <div data-reveal>
+          <a
+            href="/pages/saucy-story"
+            class="text-primary border-b-2 border-primary hover:opacity-75 transition-opacity font-body text-sm tracking-wide"
+          >
+            Read the Full Story →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Chef Arik",
+  "settings": []
+}
+{% endschema %}

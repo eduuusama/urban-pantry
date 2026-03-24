@@ -1,0 +1,29 @@
+<section class="bg-secondary grain-overlay" style="padding: 6rem 1rem;">
+  <div style="max-width: 1280px; margin: 0 auto;">
+
+    <!-- Heading -->
+    <h2 class="font-display text-foreground text-center" style="font-size: 3rem; margin: 0 0 3rem 0;">Complete Your Collection</h2>
+
+    <!-- Product Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+      {% assign related = collections.all.products %}
+      {% assign count = 0 %}
+      {% for p in related %}
+        {% unless p.handle == product.handle %}
+          {% if count < 4 %}
+            {% render 'product-card', product: p %}
+            {% assign count = count | plus: 1 %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cross Sell",
+  "settings": []
+}
+{% endschema %}

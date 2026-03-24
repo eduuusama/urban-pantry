@@ -1,0 +1,214 @@
+<header class="site-header" id="site-header">
+  {%- comment -%} Announcement Bar {%- endcomment -%}
+  <div class="bg-primary py-2 overflow-hidden">
+    <div class="animate-marquee-fast">
+      {%- for i in (1..6) -%}
+        <span class="font-display tracking-widest text-primary-foreground inline-block pr-8">
+          FREE SHIPPING on orders over $30
+        </span>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Main Navigation {%- endcomment -%}
+  <nav class="relative bg-background/95 backdrop-blur-sm border-b border-border">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+
+      {%- comment -%} Logo {%- endcomment -%}
+      <a href="/" class="flex items-center gap-3 flex-shrink-0">
+        <img
+          src="{{ 'logo.webp' | asset_url }}"
+          alt="Urban Pantry"
+          class="nav-logo"
+          style="height: 48px; width: auto; transition: height 0.3s ease;"
+        />
+        <span class="font-raw text-2xl text-foreground hidden sm:inline">Urban Pantry</span>
+      </a>
+
+      {%- comment -%} Desktop Navigation {%- endcomment -%}
+      <ul class="hidden md:flex items-center gap-8">
+        {%- assign nav_links = "Home,Shop,Saucy Story,Find Us,Contact" | split: "," -%}
+        {%- assign nav_paths = "/,/collections/all,/pages/saucy-story,/pages/find-us,/pages/contact" | split: "," -%}
+        {%- for i in (0..4) -%}
+          {%- assign is_active = false -%}
+          {%- if nav_paths[i] == request.path or (nav_paths[i] == "/" and request.path == "/") -%}
+            {%- assign is_active = true -%}
+          {%- endif -%}
+          <li>
+            <a
+              href="{{ nav_paths[i] }}"
+              class="font-display tracking-widest uppercase text-sm transition-colors"
+              style="color: {% if is_active %}hsl(var(--primary)){% else %}hsl(var(--foreground)){% endif %};"
+            >
+              {{ nav_links[i] }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- comment -%} Cart Icon & Mobile Menu Button {%- endcomment -%}
+      <div class="flex items-center gap-6">
+        <a href="/cart" class="relative">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+          {%- if cart.item_count > 0 -%}
+            <span
+              class="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center"
+            >
+              {{ cart.item_count }}
+            </span>
+          {%- endif -%}
+        </a>
+
+        <button
+          class="md:hidden"
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="Open menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  {%- comment -%} Mobile Navigation Overlay {%- endcomment -%}
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="mobile-nav-panel">
+      <button
+        class="absolute top-6 right-6 text-foreground"
+        id="mobile-menu-close"
+        type="button"
+        aria-label="Close menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <nav class="mt-16">
+        <ul class="space-y-6">
+          {%- for i in (0..4) -%}
+            <li>
+              <a
+                href="{{ nav_paths[i] }}"
+                class="font-display text-4xl text-foreground block transition-colors hover:text-primary"
+              >
+                {{ nav_links[i] }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    transition: all 0.3s ease;
+  }
+
+  .site-header.scrolled {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .site-header.scrolled .nav-logo {
+    height: 36px;
+  }
+
+  .mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 30;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .mobile-nav-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-nav-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: hsl(var(--background));
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+
+  .mobile-nav-overlay.is-open .mobile-nav-panel {
+    transform: translateX(0);
+  }
+</style>
+
+<script>
+  (function() {
+    const header = document.getElementById('site-header');
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const overlay = document.getElementById('mobile-nav-overlay');
+    const closeBtn = document.getElementById('mobile-menu-close');
+    const navLinks = overlay.querySelectorAll('a');
+
+    // Scroll shrink effect
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 60) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile menu toggle
+    mobileBtn.addEventListener('click', function() {
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeBtn.addEventListener('click', function() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
+
+    // Close menu on nav link click
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Close menu on overlay click
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}

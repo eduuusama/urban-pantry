@@ -1,0 +1,150 @@
+<div class="promo-popup-overlay" id="promo-popup">
+  <div class="promo-popup-modal">
+    {%- comment -%} Close Button {%- endcomment -%}
+    <button
+      id="promo-popup-close"
+      class="absolute top-6 right-6 text-foreground hover:text-muted-foreground transition-colors"
+      type="button"
+      aria-label="Close"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    {%- comment -%} Content {%- endcomment -%}
+    <div class="text-center">
+      <p class="font-raw text-2xl text-primary -rotate-2 inline-block">First Order?</p>
+
+      <h2 class="font-display text-5xl text-foreground mt-4 mb-4">Get 20% Off</h2>
+
+      <p class="text-muted-foreground text-sm font-light max-w-xs mx-auto mb-8">
+        Sign up and we'll send your discount code straight to your inbox. No spam, just heat.
+      </p>
+
+      {%- comment -%} Email Form {%- endcomment -%}
+      {% form 'customer' %}
+        <div class="space-y-4 mb-6">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="your@email.com"
+            required
+            class="w-full px-4 py-3 border border-border rounded bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors"
+          />
+          <button
+            type="submit"
+            class="w-full bg-primary text-primary-foreground font-display text-sm tracking-widest px-6 py-3 rounded transition-opacity hover:opacity-90"
+          >
+            Get My 20%
+          </button>
+        </div>
+      {% endform %}
+
+      {%- comment -%} Code Hint {%- endcomment -%}
+      <p class="text-xs text-muted-foreground">
+        Use code <span class="font-raw text-primary">FIRSTFIRE</span> at checkout
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .promo-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .promo-popup-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .promo-popup-modal {
+    position: relative;
+    max-width: 28rem;
+    width: 90%;
+    background-color: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    padding: 3rem 2rem 2rem;
+    animation: scaleIn 0.3s ease;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .promo-popup-modal {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    const popup = document.getElementById('promo-popup');
+    const closeBtn = document.getElementById('promo-popup-close');
+    const dismissKey = 'promo-dismissed';
+
+    // Check if popup has been dismissed
+    function checkAndShowPopup() {
+      if (!localStorage.getItem(dismissKey)) {
+        setTimeout(() => {
+          popup.classList.add('is-open');
+        }, 3000);
+      }
+    }
+
+    // Close popup
+    function closePopup() {
+      popup.classList.remove('is-open');
+      localStorage.setItem(dismissKey, 'true');
+    }
+
+    // Event listeners
+    closeBtn.addEventListener('click', closePopup);
+
+    // Click on backdrop to close
+    popup.addEventListener('click', function(e) {
+      if (e.target === popup) {
+        closePopup();
+      }
+    });
+
+    // Show popup on page load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkAndShowPopup);
+    } else {
+      checkAndShowPopup();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Promo Popup",
+  "settings": []
+}
+{% endschema %}

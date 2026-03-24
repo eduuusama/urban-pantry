@@ -1,0 +1,50 @@
+<section class="py-24 px-6 bg-primary grain-overlay text-center">
+  <div class="max-w-md mx-auto">
+
+    {%- comment -%} Heading {%- endcomment -%}
+    <h2 class="font-display text-5xl lg:text-6xl text-primary-foreground mb-4">Stay in the Heat</h2>
+
+    {%- comment -%} Subtext {%- endcomment -%}
+    <p class="text-primary-foreground/80 font-light mb-8">
+      New sauces, chef tips, and exclusive deals — straight to your inbox.
+    </p>
+
+    {%- comment -%} Newsletter Form {%- endcomment -%}
+    {% form 'customer' %}
+      <div class="space-y-3">
+        <input
+          type="hidden"
+          name="contact[tags]"
+          value="newsletter"
+        />
+
+        <input
+          type="email"
+          name="contact[email]"
+          placeholder="your@email.com"
+          required
+          class="w-full px-4 py-3 border border-primary-foreground/30 rounded bg-primary-foreground/10 text-primary-foreground placeholder-primary-foreground/50 focus:outline-none focus:border-primary-foreground transition-colors"
+        />
+
+        <button
+          type="submit"
+          class="w-full bg-foreground text-background font-display text-base tracking-widest px-6 py-3 rounded transition-opacity hover:opacity-90"
+        >
+          Subscribe
+        </button>
+      </div>
+
+      {%- if form.posted_successfully? -%}
+        <p class="text-primary-foreground text-sm mt-4">You're in. Heat incoming.</p>
+      {%- endif -%}
+    {% endform %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": []
+}
+{% endschema %}

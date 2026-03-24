@@ -1,0 +1,79 @@
+<section class="py-16 px-4 grain-overlay">
+  <div style="max-width: 1280px; margin: 0 auto;">
+
+    <!-- Filter Tabs -->
+    <div style="display: flex; gap: 1rem; margin-bottom: 3rem; justify-content: center; flex-wrap: wrap;">
+      <button class="font-display" data-filter-tab data-filter="all" style="font-size: 0.875rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.625rem 1.5rem; border: 2px solid hsl(var(--primary)); background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); transition: all 0.3s ease; cursor: pointer; text-decoration: none;">
+        All Sauces
+      </button>
+      <button class="font-display" data-filter-tab data-filter="sauces" style="font-size: 0.875rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.625rem 1.5rem; border: 2px solid hsl(var(--border)); color: hsl(var(--muted-foreground)); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor = 'hsl(var(--foreground))'; this.style.color = 'hsl(var(--foreground))';" onmouseout="this.style.borderColor = 'hsl(var(--border))'; this.style.color = 'hsl(var(--muted-foreground))';">
+        Individual
+      </button>
+      <button class="font-display" data-filter-tab data-filter="bundles" style="font-size: 0.875rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.625rem 1.5rem; border: 2px solid hsl(var(--border)); color: hsl(var(--muted-foreground)); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor = 'hsl(var(--foreground))'; this.style.color = 'hsl(var(--foreground))';" onmouseout="this.style.borderColor = 'hsl(var(--border))'; this.style.color = 'hsl(var(--muted-foreground))';">
+        Bundles
+      </button>
+    </div>
+
+    <!-- Product Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+      {% for product in collection.products %}
+        <!-- Determine product type -->
+        {% assign is_bundle = false %}
+        {% for tag in product.tags %}
+          {% if tag == 'bundle' or tag == 'bundles' %}
+            {% assign is_bundle = true %}
+          {% endif %}
+        {% endfor %}
+
+        <div data-product-card data-type="{% if is_bundle %}bundles{% else %}sauces{% endif %}" style="transition: opacity 0.3s ease;">
+          {% render 'product-card', product: product %}
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterButtons = document.querySelectorAll('[data-filter-tab]');
+  const productCards = document.querySelectorAll('[data-product-card]');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const filterValue = this.getAttribute('data-filter');
+
+      // Update active button styling
+      filterButtons.forEach(btn => {
+        btn.style.background = 'transparent';
+        btn.style.color = 'hsl(var(--muted-foreground))';
+        btn.style.borderColor = 'hsl(var(--border))';
+      });
+      this.style.background = 'hsl(var(--primary))';
+      this.style.color = 'hsl(var(--primary-foreground))';
+      this.style.borderColor = 'hsl(var(--primary))';
+
+      // Filter products
+      productCards.forEach(card => {
+        const cardType = card.getAttribute('data-type');
+        if (filterValue === 'all' || cardType === filterValue) {
+          card.style.display = 'block';
+          card.style.opacity = '1';
+        } else {
+          card.style.opacity = '0';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 300);
+        }
+      });
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Collection Grid",
+  "settings": []
+}
+{% endschema %}

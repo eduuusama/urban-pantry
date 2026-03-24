@@ -1,0 +1,45 @@
+<section
+  class="py-4 overflow-hidden"
+  style="background-color: {% if section.settings.variant == 'accent' %}hsl(var(--accent)){% else %}hsl(var(--primary)){% endif %};"
+>
+  <div class="animate-marquee-fast">
+    {%- for i in (1..6) -%}
+      <span
+        class="font-display tracking-widest text-primary-foreground uppercase distressed-text inline-block pr-8"
+        aria-hidden="true"
+      >
+        {{ section.settings.messages }}
+      </span>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marquee Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "messages",
+      "label": "Marquee Text",
+      "default": "Vegan · Gluten-Free · Sugar-Free · Chef-Crafted · No Artificial Ingredients"
+    },
+    {
+      "type": "select",
+      "id": "variant",
+      "label": "Background Color",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "accent",
+          "label": "Accent"
+        }
+      ],
+      "default": "primary"
+    }
+  ]
+}
+{% endschema %}

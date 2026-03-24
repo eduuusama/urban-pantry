@@ -1,0 +1,166 @@
+{%- comment -%}
+  Contact Form Section
+  Hero + 2-column contact info and form
+{%- endcomment -%}
+
+{%- comment -%}HERO SECTION{%- endcomment -%}
+<section class="grain-overlay" style="padding: 6rem 1rem; text-align: center; min-height: 40vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <div data-reveal style="max-width: 800px; margin: 0 auto;">
+    <h1 class="font-display text-foreground" style="font-size: clamp(2.5rem, 10vw, 3.75rem); line-height: 1.2; margin-bottom: 1.5rem;">
+      Get In Touch
+    </h1>
+    <p class="text-muted-foreground" style="font-family: var(--font-body); font-size: 1.125rem; font-weight: 300;">
+      Questions, wholesale inquiries, or just want to talk hot sauce — we're here.
+    </p>
+  </div>
+</section>
+
+{%- comment -%}CONTACT CONTENT SECTION{%- endcomment -%}
+<section style="padding: 6rem 1rem; max-width: 1200px; margin: 0 auto;">
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: flex-start;">
+
+    {%- comment -%}LEFT: Contact Info{%- endcomment -%}
+    <div data-reveal>
+      <h2 class="font-display text-foreground" style="font-size: 1.5rem; margin-bottom: 2rem;">
+        Contact Info
+      </h2>
+
+      <div style="margin-bottom: 2rem;">
+        <p class="text-muted-foreground" style="font-family: var(--font-body); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">
+          Email
+        </p>
+        <a href="mailto:info@eaturbanpantry.com" style="color: hsl(var(--primary)); text-decoration: none; font-family: var(--font-body); font-size: 1.125rem; transition: opacity 0.2s ease;">
+          info@eaturbanpantry.com
+        </a>
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <p class="text-muted-foreground" style="font-family: var(--font-body); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">
+          Follow Us
+        </p>
+        <a href="https://instagram.com/eaturbanpantry" target="_blank" style="color: hsl(var(--primary)); text-decoration: none; font-family: var(--font-body); font-size: 1.125rem; transition: opacity 0.2s ease;">
+          @eaturbanpantry
+        </a>
+      </div>
+
+      <p class="text-muted-foreground" style="font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.6;">
+        We typically respond within 24 hours.
+      </p>
+    </div>
+
+    {%- comment -%}RIGHT: Contact Form{%- endcomment -%}
+    <div data-reveal data-reveal-delay="200ms">
+      {% form 'contact' %}
+
+        {%- if form.posted_successfully? -%}
+          <div style="text-align: center; padding: 3rem 0;">
+            <p class="font-display" style="font-size: 1.5rem; color: hsl(var(--primary)); margin-bottom: 1rem;">
+              Message received.
+            </p>
+            <p style="color: hsl(var(--muted-foreground)); font-family: var(--font-body);">
+              We'll be in touch within 24 hours.
+            </p>
+          </div>
+        {%- else -%}
+
+          {%- comment -%}Name Input{%- endcomment -%}
+          <div style="margin-bottom: 1.5rem;">
+            <input
+              type="text"
+              name="contact[name]"
+              placeholder="Your name"
+              style="width: 100%; background: hsl(var(--secondary)); border: 1px solid hsl(var(--border)); padding: 1rem; color: hsl(var(--foreground)); font-family: var(--font-body); font-size: 1rem; box-sizing: border-box; transition: all 0.2s ease;"
+              class="contact-form-input"
+              required
+            >
+          </div>
+
+          {%- comment -%}Email Input{%- endcomment -%}
+          <div style="margin-bottom: 1.5rem;">
+            <input
+              type="email"
+              name="contact[email]"
+              placeholder="your@email.com"
+              style="width: 100%; background: hsl(var(--secondary)); border: 1px solid hsl(var(--border)); padding: 1rem; color: hsl(var(--foreground)); font-family: var(--font-body); font-size: 1rem; box-sizing: border-box; transition: all 0.2s ease;"
+              class="contact-form-input"
+              required
+            >
+          </div>
+
+          {%- comment -%}Subject Select{%- endcomment -%}
+          <div style="margin-bottom: 1.5rem;">
+            <select
+              name="contact[subject]"
+              style="width: 100%; background: hsl(var(--secondary)); border: 1px solid hsl(var(--border)); padding: 1rem; color: hsl(var(--foreground)); font-family: var(--font-body); font-size: 1rem; box-sizing: border-box; transition: all 0.2s ease; cursor: pointer;"
+              class="contact-form-input"
+            >
+              <option value="">Select a topic</option>
+              <option value="General Question">General Question</option>
+              <option value="Wholesale Inquiry">Wholesale Inquiry</option>
+              <option value="Order Issue">Order Issue</option>
+              <option value="Media or Press">Media or Press</option>
+              <option value="Just Saying Hi">Just Saying Hi</option>
+            </select>
+          </div>
+
+          {%- comment -%}Message Textarea{%- endcomment -%}
+          <div style="margin-bottom: 1.5rem;">
+            <textarea
+              name="contact[body]"
+              rows="6"
+              placeholder="Your message..."
+              style="width: 100%; background: hsl(var(--secondary)); border: 1px solid hsl(var(--border)); padding: 1rem; color: hsl(var(--foreground)); font-family: var(--font-body); font-size: 1rem; box-sizing: border-box; resize: vertical; transition: all 0.2s ease; line-height: 1.5;"
+              class="contact-form-input"
+              required
+            ></textarea>
+          </div>
+
+          {%- comment -%}Submit Button{%- endcomment -%}
+          <button
+            type="submit"
+            style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border: none; padding: 1rem 2rem; font-family: var(--font-display); font-size: 1.125rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s ease; width: 100%;"
+            class="contact-form-submit"
+          >
+            Send It
+          </button>
+
+        {%- endif -%}
+
+      {% endform %}
+    </div>
+
+  </div>
+
+</section>
+
+{%- comment -%}CSS for input focus states{%- endcomment -%}
+<style>
+  .contact-form-input:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.1);
+  }
+
+  .contact-form-submit:hover {
+    opacity: 0.9;
+  }
+
+  .contact-form-submit:active {
+    opacity: 0.8;
+  }
+
+  select.contact-form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23000' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Contact Form"
+}
+{% endschema %}

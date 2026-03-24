@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "saucy_hero": {
+      "type": "saucy-story-hero"
+    },
+    "saucy_content": {
+      "type": "saucy-story-content"
+    }
+  },
+  "order": ["saucy_hero", "saucy_content"]
+}

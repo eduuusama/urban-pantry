@@ -1,0 +1,50 @@
+<section style="padding: 6rem 1rem; max-width: 1280px; margin: 0 auto;">
+
+  <!-- Story Block 1 -->
+  {% if product.metafields.custom.story_block_1_label.value %}
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 6rem;">
+      <!-- Text -->
+      <div>
+        <p class="font-display text-primary" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 1rem 0;">{{ product.metafields.custom.story_block_1_label.value }}</p>
+        <h2 class="font-display text-foreground" style="font-size: 2rem; margin: 0 0 1.5rem 0; line-height: 1.2;">{{ product.metafields.custom.story_block_1_title.value }}</h2>
+        <p class="font-body text-muted-foreground" style="margin: 0; line-height: 1.8; font-weight: 300;">{{ product.metafields.custom.story_block_1_text.value }}</p>
+      </div>
+      <!-- Image -->
+      <div style="border-radius: 0.375rem; overflow: hidden;">
+        {% if product.images.size > 1 %}
+          <img src="{{ product.images[1] | image_url: width: 600 }}" alt="Story 1" style="width: 100%; height: auto; object-fit: cover; display: block;">
+        {% else %}
+          <img src="{{ product.featured_image | image_url: width: 600 }}" alt="Story 1" style="width: 100%; height: auto; object-fit: cover; display: block;">
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Story Block 2 -->
+  {% if product.metafields.custom.story_block_2_label.value %}
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; grid-auto-flow: dense;">
+      <!-- Image (reversed) -->
+      <div style="border-radius: 0.375rem; overflow: hidden; grid-column: 2; grid-row: 1;">
+        {% if product.images.size > 2 %}
+          <img src="{{ product.images[2] | image_url: width: 600 }}" alt="Story 2" style="width: 100%; height: auto; object-fit: cover; display: block;">
+        {% else %}
+          <img src="{{ product.featured_image | image_url: width: 600 }}" alt="Story 2" style="width: 100%; height: auto; object-fit: cover; display: block;">
+        {% endif %}
+      </div>
+      <!-- Text -->
+      <div style="grid-column: 1; grid-row: 1;">
+        <p class="font-display text-primary" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 1rem 0;">{{ product.metafields.custom.story_block_2_label.value }}</p>
+        <h2 class="font-display text-foreground" style="font-size: 2rem; margin: 0 0 1.5rem 0; line-height: 1.2;">{{ product.metafields.custom.story_block_2_title.value }}</h2>
+        <p class="font-body text-muted-foreground" style="margin: 0; line-height: 1.8; font-weight: 300;">{{ product.metafields.custom.story_block_2_text.value }}</p>
+      </div>
+    </div>
+  {% endif %}
+
+</section>
+
+{% schema %}
+{
+  "name": "Product Story",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "disabled": false
+    },
+    "marquee_1": {
+      "type": "marquee-banner",
+      "settings": {
+        "messages": "Vegan · Gluten-Free · Sugar-Free · Chef-Crafted · No Artificial Ingredients",
+        "variant": "primary"
+      }
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "disabled": false
+    },
+    "brand_story": {
+      "type": "brand-story",
+      "disabled": false
+    },
+    "marquee_2": {
+      "type": "marquee-banner",
+      "settings": {
+        "messages": "Free Shipping Over $30 · Made in Small Batches · Michelin-Trained Chef",
+        "variant": "accent"
+      }
+    },
+    "chef_arik": {
+      "type": "chef-arik",
+      "disabled": false
+    },
+    "boom_box": {
+      "type": "boom-box",
+      "disabled": false
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "disabled": false
+    },
+    "retailer_logos": {
+      "type": "retailer-logos",
+      "disabled": false
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": false
+    }
+  },
+  "order": [
+    "hero",
+    "marquee_1",
+    "featured_products",
+    "brand_story",
+    "marquee_2",
+    "chef_arik",
+    "boom_box",
+    "testimonials",
+    "retailer_logos",
+    "newsletter"
+  ]
+}

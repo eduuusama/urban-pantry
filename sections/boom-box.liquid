@@ -1,0 +1,84 @@
+{%- assign boom_box = all_products['boom-box'] -%}
+
+<section class="py-24 px-6 bg-secondary grain-overlay">
+  <div class="max-w-7xl mx-auto">
+
+    {%- comment -%} Section Heading {%- endcomment -%}
+    <div class="text-center mb-12" data-reveal>
+      <h2 class="font-display text-7xl lg:text-8xl text-foreground spray-quote">The Boom Box</h2>
+      <div class="section-divider my-8"></div>
+    </div>
+
+    {%- comment -%} Content Grid {%- endcomment -%}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+      {%- comment -%} Product Image {%- endcomment -%}
+      <div
+        class="rounded overflow-hidden"
+        style="
+          background: linear-gradient(to bottom right, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1));
+        "
+        data-reveal
+      >
+        <a href="/products/boom-box">
+          {%- if boom_box.featured_image -%}
+            {{ boom_box.featured_image | image_url: width: 600 | image_tag }}
+          {%- else -%}
+            <img src="{{ 'collection.webp' | asset_url }}" alt="Boom Box Collection" />
+          {%- endif -%}
+        </a>
+      </div>
+
+      {%- comment -%} Product Details {%- endcomment -%}
+      <div class="space-y-6" data-reveal>
+        <p class="font-display text-sm tracking-widest uppercase text-primary">Featured Bundle</p>
+
+        <a href="/products/boom-box" class="inline-block hover:opacity-75 transition-opacity">
+          <h3 class="font-display text-5xl lg:text-6xl text-foreground">Boom Box Collection</h3>
+        </a>
+
+        <p class="font-body text-muted-foreground font-light leading-relaxed max-w-lg">
+          One bottle of each. Four cuisines. Infinite possibilities. Whatever's on your plate — there's a sauce that was born for it.
+        </p>
+
+        {%- comment -%} Price {%- endcomment -%}
+        <div class="flex items-center gap-4">
+          <span class="font-display text-5xl text-foreground">{{ boom_box.price | money }}</span>
+          {%- if boom_box.compare_at_price -%}
+            <span class="font-body text-muted-foreground line-through">{{ boom_box.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Add to Cart Button {%- endcomment -%}
+        <button
+          class="btn-add-to-cart bg-primary text-primary-foreground font-display text-base tracking-widest px-8 py-4 rounded transition-opacity hover:opacity-90 animate-cta-pulse"
+          data-variant-id="{{ boom_box.selected_or_first_available_variant.id }}"
+          type="button"
+        >
+          Add to Cart
+        </button>
+
+        {%- comment -%} Feature Badges {%- endcomment -%}
+        <div class="space-y-3 pt-4">
+          <div class="bg-card border border-border rounded-full px-6 py-3 inline-block text-sm text-foreground font-body">
+            Chef-crafted, Michelin-trained
+          </div>
+          <div class="bg-card border border-border rounded-full px-6 py-3 block text-sm text-foreground font-body">
+            True-to-cuisine flavor profiles
+          </div>
+          <div class="bg-card border border-border rounded-full px-6 py-3 block text-sm text-foreground font-body">
+            Authentic global ingredients
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Boom Box",
+  "settings": []
+}
+{% endschema %}
