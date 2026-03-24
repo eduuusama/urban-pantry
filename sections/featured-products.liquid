@@ -3,13 +3,19 @@
 
     {%- comment -%} Section Heading {%- endcomment -%}
     <div class="text-center mb-12">
-      <h2 class="font-display text-6xl lg:text-7xl text-foreground">The Collection</h2>
+      <h2 class="font-display text-6xl lg:text-7xl text-foreground" style="margin-bottom: 0.75rem;">The Collection</h2>
+      <p class="font-body text-muted-foreground" style="font-size: 1rem; font-weight: 300;">Four premium sauces, each created to pair with the appropriate cuisine.</p>
+      <div style="height: 0.25rem; width: 100%; background: linear-gradient(to right, hsl(var(--primary)), hsl(35 80% 50%), hsl(var(--primary) / 0.2)); margin-top: 1.5rem; border-radius: 9999px;"></div>
     </div>
 
-    {%- comment -%} Products Grid {%- endcomment -%}
+    {%- comment -%} Products Grid — hardcoded to the 4 individual sauces {%- endcomment -%}
+    {%- assign sauce_handles = "bomba-sauce,mo-rockin-sauce,piquin-hot,sambal-istic-sauce" | split: "," -%}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-      {%- for product in collections['sauces'].products limit: 4 -%}
-        {% render 'product-card', product: product %}
+      {%- for handle in sauce_handles -%}
+        {%- assign product = all_products[handle] -%}
+        {%- if product != blank -%}
+          {% render 'product-card', product: product %}
+        {%- endif -%}
       {%- endfor -%}
     </div>
 

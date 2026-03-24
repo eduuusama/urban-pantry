@@ -1,91 +1,109 @@
 <section style="max-width: 1280px; margin: 0 auto; padding: 3rem 1rem;">
 
-  <!-- Breadcrumb -->
-  <a href="/collections/all" class="font-display text-muted-foreground" style="font-size: 0.875rem; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; display: inline-block; margin-bottom: 2rem;">
-    ← Back to Shop
-  </a>
+  {% assign accent_color = product.metafields.custom.accent_color.value %}
+  {% unless accent_color %}
+    {% case product.handle %}
+      {% when 'bomba-sauce' %}{% assign accent_color = '#D79523' %}
+      {% when 'mo-rockin-sauce' %}{% assign accent_color = '#C8A800' %}
+      {% when 'piquin-hot' %}{% assign accent_color = '#FA711B' %}
+      {% when 'sambal-istic-sauce' %}{% assign accent_color = '#D24843' %}
+      {% else %}{% assign accent_color = 'hsl(var(--primary))' %}
+    {% endcase %}
+  {% endunless %}
+  {% assign is_bundle = false %}
+  {% for tag in product.tags %}
+    {% if tag == 'bundle' or tag == 'bundles' %}
+      {% assign is_bundle = true %}
+    {% endif %}
+  {% endfor %}
 
   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
 
     <!-- IMAGE COLUMN -->
     <div>
-      {% assign accent_color = product.metafields.custom.accent_color.value %}
-      {% assign is_bundle = false %}
-      {% for tag in product.tags %}
-        {% if tag == 'bundle' or tag == 'bundles' %}
-          {% assign is_bundle = true %}
-        {% endif %}
-      {% endfor %}
-
-      <div id="product-main-image-wrap" style="aspect-ratio: 1; border-radius: 0.375rem; overflow: hidden; background: linear-gradient(135deg, rgba({{ accent_color | remove: '#' | slice: 0, 2 | hex_to_rgb }}, 0.08), rgba({{ accent_color | remove: '#' | slice: 2, 2 | hex_to_rgb }}, 0.08)); position: relative; display: flex; align-items: center; justify-content: center;">
-
-        {% if product.metafields.custom.badge.value %}
-          <div style="position: absolute; top: 1rem; right: 1rem; font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 0.75rem; color: white; background-color: {{ accent_color }};">
-            {{ product.metafields.custom.badge.value }}
-          </div>
-        {% endif %}
-
-        <img id="product-main-image" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" style="height: 85%; width: auto; object-fit: contain; filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.1));">
+      <!-- Main product image -->
+      <div id="product-main-image-wrap" style="aspect-ratio: 1; background: #f8f7f5; display: flex; align-items: center; justify-content: center; position: relative;">
+        <img id="product-main-image" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" style="height: 85%; width: auto; object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));">
       </div>
 
-      <!-- Thumbnails -->
+      <!-- Thumbnails (images 1, 2, 3 - offset 1, limit 3) -->
       {% if product.images.size > 1 %}
         <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
-          {% for image in product.images %}
-            <button data-thumb data-src="{{ image | image_url: width: 600 }}" data-is-bottle="{% if forloop.first %}true{% else %}false{% endif %}" style="flex: 1; aspect-ratio: 1; border: 2px solid {% if forloop.first %}hsl(var(--foreground)){% else %}hsl(var(--border)){% endif %}; overflow: hidden; border-radius: 0.375rem; background: white; cursor: pointer; transition: border-color 0.3s ease;">
-              <img src="{{ image | image_url: width: 100 }}" alt="Product image {{ forloop.index }}" style="width: 100%; height: 100%; object-fit: contain; padding: 0.25rem;">
+          {% for image in product.images offset: 1 limit: 3 %}
+            <button data-thumb data-src="{{ image | image_url: width: 600 }}" style="flex: 1; aspect-ratio: 1; border: 2px solid hsl(var(--border)); overflow: hidden; border-radius: 0.375rem; background: white; cursor: pointer; transition: border-color 0.3s ease;">
+              <img src="{{ image | image_url: width: 100 }}" alt="Product image" style="width: 100%; height: 100%; object-fit: contain; padding: 0.25rem;">
             </button>
           {% endfor %}
         </div>
       {% endif %}
     </div>
 
-    <!-- DETAILS COLUMN -->
+    <!-- DETAILS COLUMN (in exact order) -->
     <div>
-      <!-- Subtitle -->
+
+      <!-- 1. Back to Shop link -->
+      <a href="/collections/all" class="font-display" style="color: hsl(var(--primary)); font-size: 0.875rem; letter-spacing: 0.15em; text-decoration: none; cursor: pointer; display: inline-block; margin-bottom: 2rem;">
+        ← Back to Shop
+      </a>
+
+      <!-- 2. Subtitle -->
       {% if product.metafields.custom.subtitle.value %}
         <p class="font-raw" style="font-size: 1.125rem; color: {{ accent_color }}; margin: 0 0 0.5rem 0; transform: rotate(-1deg);">
           {{ product.metafields.custom.subtitle.value }}
         </p>
       {% endif %}
 
-      <!-- Title -->
-      <h1 class="font-display text-foreground" style="font-size: 3.5rem; margin: 0 0 1rem 0; line-height: 1.1; letter-spacing: -0.02em;">
+      <!-- 3. H1 Title -->
+      <h1 class="font-display" style="font-size: 3.5rem; margin: 0 0 1rem 0; line-height: 1.1; letter-spacing: -0.02em; color: hsl(var(--foreground));">
         {{ product.title }}
       </h1>
 
-      <!-- Price & Size -->
-      <div style="margin: 1.5rem 0;">
-        <p class="font-display text-foreground" style="font-size: 2rem; margin: 0.5rem 0;">
-          {{ product.price | money }}
-        </p>
-        {% if product.metafields.custom.size.value %}
-          <p class="font-body text-muted-foreground" style="margin: 0.5rem 0;">
-            {{ product.metafields.custom.size.value }}
-          </p>
-        {% else %}
-          <p class="font-body text-muted-foreground" style="margin: 0.5rem 0;">
-            5 FL OZ (148 ml)
-          </p>
-        {% endif %}
-      </div>
+      <!-- 4. Price -->
+      <p class="font-display" style="font-size: 2rem; margin: 0.5rem 0; color: hsl(var(--foreground));">
+        {{ product.price | money }}
+      </p>
 
-      <!-- Heat Level Dots (if not bundle) -->
+      <!-- 5. Size line -->
+      <p class="font-display text-muted-foreground" style="font-size: 1rem; margin: 0.5rem 0; color: hsl(var(--muted-foreground));">
+        · {% if product.metafields.custom.size.value %}{{ product.metafields.custom.size.value }}{% else %}5 FL OZ (148 ml){% endif %}
+      </p>
+
+      <!-- 6. Heat level label + 5 dots -->
       {% unless is_bundle %}
         {% assign heat = product.metafields.custom.heat_level.value | plus: 0 %}
         <div style="margin: 2rem 0;">
-          <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0;">Heat</p>
+          <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0; color: hsl(var(--muted-foreground));">Heat</p>
           <div style="display: flex; gap: 0.5rem;">
             {% for i in (1..5) %}
               <div style="width: 1.25rem; height: 1.25rem; border-radius: 50%; {% if i <= heat %}background-color: {{ accent_color }};{% else %}border: 2px solid hsl(var(--border)); background: transparent;{% endif %}"></div>
             {% endfor %}
           </div>
         </div>
+      {% endunless %}
 
-        <!-- Key Ingredients -->
+      <!-- 7. Description text -->
+      <p class="font-body" style="font-weight: 300; line-height: 1.8; color: hsl(var(--foreground)); margin: 1.5rem 0;">
+        {{ product.description | strip_html }}
+      </p>
+
+      <!-- 8. Add to Cart button -->
+      <button class="btn-add-to-cart animate-cta-pulse font-display" data-variant-id="{{ product.selected_or_first_available_variant.id }}" style="font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 1rem 2.5rem; width: 100%; border: none; border-radius: 0.375rem; cursor: pointer; margin-top: 2rem; font-weight: 600; transition: all 0.3s ease;">
+        Add to Cart
+      </button>
+
+      <!-- 9. Four attribute badges -->
+      <div style="display: flex; gap: 0.5rem; margin-top: 2rem; flex-wrap: wrap;">
+        <span class="font-display" style="font-size: 0.7rem; border: 1px solid hsl(var(--border)); border-radius: 0.375rem; padding: 0.4rem 0.75rem; color: hsl(var(--foreground)); text-transform: uppercase; letter-spacing: 0.1em;">Vegan</span>
+        <span class="font-display" style="font-size: 0.7rem; border: 1px solid hsl(var(--border)); border-radius: 0.375rem; padding: 0.4rem 0.75rem; color: hsl(var(--foreground)); text-transform: uppercase; letter-spacing: 0.1em;">Gluten-Free</span>
+        <span class="font-display" style="font-size: 0.7rem; border: 1px solid hsl(var(--border)); border-radius: 0.375rem; padding: 0.4rem 0.75rem; color: hsl(var(--foreground)); text-transform: uppercase; letter-spacing: 0.1em;">Sugar-Free</span>
+        <span class="font-display" style="font-size: 0.7rem; border: 1px solid hsl(var(--border)); border-radius: 0.375rem; padding: 0.4rem 0.75rem; color: hsl(var(--foreground)); text-transform: uppercase; letter-spacing: 0.1em;">Nothing Artificial</span>
+      </div>
+
+      <!-- 10. Key Ingredients section -->
+      {% unless is_bundle %}
         {% if product.metafields.custom.key_ingredients.value %}
           <div style="margin: 2rem 0;">
-            <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0;">Key Ingredients</p>
+            <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0; color: hsl(var(--muted-foreground));">Key Ingredients</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
               {% for ingredient in product.metafields.custom.key_ingredients.value %}
                 <span class="font-display" style="font-size: 0.75rem; letter-spacing: 0.15em; border: 1px solid hsl(var(--border)); border-radius: 0.25rem; padding: 0.5rem 0.75rem; color: hsl(var(--foreground));">{{ ingredient }}</span>
@@ -94,10 +112,10 @@
           </div>
         {% endif %}
 
-        <!-- Perfect Pairings -->
+        <!-- 11. Perfect Pairings section -->
         {% if product.metafields.custom.perfect_pairings.value %}
           <div style="margin: 2rem 0;">
-            <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0;">Perfect Pairings</p>
+            <p class="font-display text-muted-foreground" style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 0.75rem 0; color: hsl(var(--muted-foreground));">Perfect Pairings</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
               {% for pairing in product.metafields.custom.perfect_pairings.value %}
                 <span class="font-display" style="font-size: 0.75rem; letter-spacing: 0.15em; border: 1px solid hsl(var(--border)); border-radius: 0.25rem; padding: 0.5rem 0.75rem; color: hsl(var(--foreground));">{{ pairing }}</span>
@@ -107,12 +125,7 @@
         {% endif %}
       {% endunless %}
 
-      <!-- Add to Cart Button -->
-      <button class="btn-add-to-cart animate-cta-pulse font-display" data-variant-id="{{ product.selected_or_first_available_variant.id }}" style="font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 1rem 2.5rem; width: 100%; border: none; border-radius: 0.375rem; cursor: pointer; margin-top: 2rem; font-weight: 600; transition: all 0.3s ease;">
-        Add to Cart
-      </button>
-
-      <!-- Bundle Picker (Beat Box / Freestyler) -->
+      <!-- 12. Bundle picker -->
       {% if product.handle == 'beat-box-1' or product.handle == 'beat-box' or product.handle contains 'freestyler' or product.handle contains 'two-pack' %}
         {% assign pick_count = 3 %}
         {% if product.handle contains 'freestyler' or product.handle contains 'two-pack' %}

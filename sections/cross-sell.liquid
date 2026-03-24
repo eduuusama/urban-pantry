@@ -1,25 +1,94 @@
-<section class="bg-secondary grain-overlay" style="padding: 6rem 1rem;">
-  <div style="max-width: 1280px; margin: 0 auto;">
+<section class="grain-overlay" style="background-color: #f8f7f5; padding: 6rem 1.5rem;">
+  <div style="max-width: 80rem; margin: 0 auto;">
 
     <!-- Heading -->
-    <h2 class="font-display text-foreground text-center" style="font-size: 3rem; margin: 0 0 3rem 0;">Complete Your Collection</h2>
+    <h2 class="font-display" style="font-size: 3rem; text-align: center; color: hsl(var(--foreground)); margin: 0 0 1.5rem 0;">Complete Your Collection</h2>
 
-    <!-- Product Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-      {% assign related = collections.all.products %}
-      {% assign count = 0 %}
-      {% for p in related %}
-        {% unless p.handle == product.handle %}
-          {% if count < 4 %}
-            {% render 'product-card', product: p %}
-            {% assign count = count | plus: 1 %}
-          {% endif %}
+    <!-- Subtitle -->
+    <p class="font-body" style="text-align: center; color: hsl(var(--muted-foreground)); font-weight: 300; margin: 0 0 3rem 0;">Grab the other flavors — or get them all in a bundle.</p>
+
+    <!-- Scrollable Product Row -->
+    <div style="display: flex; gap: 1.5rem; overflow-x: auto; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
+
+      {% assign sauce_handles = "bomba-sauce,mo-rockin-sauce,piquin-hot,sambal-istic-sauce,beat-box-1,boom-box" | split: "," %}
+      {% assign accent_color = product.metafields.custom.accent_color.value %}
+      {% unless accent_color %}
+        {% case product.handle %}
+          {% when 'bomba-sauce' %}{% assign accent_color = '#D79523' %}
+          {% when 'mo-rockin-sauce' %}{% assign accent_color = '#C8A800' %}
+          {% when 'piquin-hot' %}{% assign accent_color = '#FA711B' %}
+          {% when 'sambal-istic-sauce' %}{% assign accent_color = '#D24843' %}
+          {% else %}{% assign accent_color = 'hsl(var(--primary))' %}
+        {% endcase %}
+      {% endunless %}
+
+      {% for handle in sauce_handles %}
+        {% assign p = all_products[handle] %}
+        {% unless p == blank or p.handle == product.handle %}
+
+          {% comment %} Per-card accent color fallback {% endcomment %}
+          {% assign p_accent = p.metafields.custom.accent_color.value %}
+          {% unless p_accent %}
+            {% case p.handle %}
+              {% when 'bomba-sauce' %}{% assign p_accent = '#D79523' %}
+              {% when 'mo-rockin-sauce' %}{% assign p_accent = '#C8A800' %}
+              {% when 'piquin-hot' %}{% assign p_accent = '#FA711B' %}
+              {% when 'sambal-istic-sauce' %}{% assign p_accent = '#D24843' %}
+              {% else %}{% assign p_accent = 'hsl(var(--primary))' %}
+            {% endcase %}
+          {% endunless %}
+
+          <a href="{{ p.url }}" style="flex-shrink: 0; width: 200px; cursor: pointer; text-align: center; text-decoration: none; color: inherit; position: relative;">
+
+            <!-- Product Image Container -->
+            <div style="aspect-ratio: 1; background-color: white; border-radius: 0.5rem; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              {% if p.featured_image %}
+                <img src="{{ p.featured_image | image_url: width: 300 }}" alt="{{ p.title }}" style="height: 70%; width: auto; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12)); transition: transform 0.3s;">
+              {% endif %}
+            </div>
+
+            <!-- Badge (subtitle) -->
+            {% if p.metafields.custom.collection_badge.value %}
+              <p class="font-raw" style="font-size: 0.875rem; color: {{ p_accent }}; margin: 0 0 0.5rem 0; text-transform: uppercase;">{{ p.metafields.custom.collection_badge.value }}</p>
+            {% elsif p.metafields.custom.subtitle.value %}
+              <p class="font-raw" style="font-size: 0.875rem; color: {{ p_accent }}; margin: 0 0 0.5rem 0; text-transform: uppercase;">{{ p.metafields.custom.subtitle.value }}</p>
+            {% endif %}
+
+            <!-- Product Title -->
+            <h3 class="font-display" style="font-size: 1rem; letter-spacing: 0.1em; color: hsl(var(--foreground)); margin: 0 0 0.75rem 0;">{{ p.title }}</h3>
+
+            <!-- Price -->
+            <p class="font-display" style="font-size: 0.875rem; color: hsl(var(--primary)); margin: 0;">
+              {% if p.compare_at_price > p.price %}
+                <span style="text-decoration: line-through; color: hsl(var(--muted-foreground)); margin-right: 0.5rem;">{{ p.compare_at_price | money }}</span>
+              {% endif %}
+              {{ p.price | money }}
+            </p>
+
+            <!-- Add to Cart Button (visible on hover) -->
+            <button style="display: none; margin-top: 1rem; padding: 0.5rem 1rem; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border: none; border-radius: 0.375rem; font-family: inherit; font-size: 0.875rem; font-weight: 600; cursor: pointer; width: 100%;">Add to Cart</button>
+
+          </a>
+
         {% endunless %}
       {% endfor %}
+
     </div>
 
   </div>
 </section>
+
+<style>
+  [href*="/products/"] {
+    transition: transform 0.2s;
+  }
+  [href*="/products/"]:hover img {
+    transform: scale(1.08);
+  }
+  [href*="/products/"]:hover button {
+    display: block;
+  }
+</style>
 
 {% schema %}
 {

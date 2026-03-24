@@ -1,97 +1,108 @@
-<section class="bg-secondary grain-overlay" style="padding: 6rem 1rem;">
-  <div style="max-width: 1280px; margin: 0 auto;">
+<section class="grain-overlay" style="background-color: #f8f7f5; padding: 6rem 1.5rem;">
+  <div style="max-width: 80rem; margin: 0 auto;">
 
     <!-- Heading -->
-    <h2 class="font-display text-foreground text-center" style="font-size: 3.5rem; margin: 0 0 2rem 0; line-height: 1.1;">Flavor DNA</h2>
-    <div class="section-divider" style="margin-bottom: 3rem;"></div>
+    <h2 class="font-display" style="font-size: 3.5rem; text-align: center; margin: 0 0 1.5rem 0; line-height: 1.1; color: hsl(var(--foreground));">Flavor DNA</h2>
+
+    <!-- Subtitle -->
+    <p class="font-body" style="text-align: center; color: hsl(var(--muted-foreground)); font-weight: 300; margin: 0 0 3rem 0; line-height: 1.6;">What makes this sauce tick.</p>
 
     <!-- Content Grid -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
 
-      <!-- LEFT: Flavor Bars -->
+      <!-- LEFT: Flavor Bars & Origin -->
       <div>
         {% assign flavor_heat = product.metafields.custom.flavor_heat.value | plus: 0 %}
         {% assign flavor_smokiness = product.metafields.custom.flavor_smokiness.value | plus: 0 %}
         {% assign flavor_acidity = product.metafields.custom.flavor_acidity.value | plus: 0 %}
         {% assign flavor_complexity = product.metafields.custom.flavor_complexity.value | plus: 0 %}
         {% assign accent_color = product.metafields.custom.accent_color.value %}
+        {% unless accent_color %}
+          {% case product.handle %}
+            {% when 'bomba-sauce' %}{% assign accent_color = '#D79523' %}
+            {% when 'mo-rockin-sauce' %}{% assign accent_color = '#C8A800' %}
+            {% when 'piquin-hot' %}{% assign accent_color = '#FA711B' %}
+            {% when 'sambal-istic-sauce' %}{% assign accent_color = '#D24843' %}
+            {% else %}{% assign accent_color = 'hsl(var(--primary))' %}
+          {% endcase %}
+        {% endunless %}
 
         <!-- Heat Bar -->
-        <div data-flavor-bar data-value="{{ flavor_heat }}" data-color="{{ accent_color }}" data-delay="0ms" style="margin-bottom: 2.5rem;">
+        <div data-flavor-bar data-value="{{ flavor_heat }}" data-delay="0ms" style="margin-bottom: 2rem;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 0.375rem;">
             <span class="font-display" style="font-size: 0.75rem; letter-spacing: 0.2em; color: hsl(var(--foreground)); text-transform: uppercase;">Heat</span>
             <span class="font-display" style="font-size: 0.75rem; color: hsl(var(--muted-foreground));">{{ flavor_heat }}/5</span>
           </div>
-          <div style="height: 0.75rem; background: hsla(var(--border), 0.4); border-radius: 9999px; overflow: hidden;">
-            <div class="flavor-bar-fill" style="background-color: {{ accent_color }}; height: 100%; width: 0%; transition: width 0.8s ease-out; transition-delay: 0ms;"></div>
+          <div style="height: 0.625rem; background: rgba(0, 0, 0, 0.08); border-radius: 9999px; overflow: hidden;">
+            <div class="flavor-bar-fill" style="background-color: {{ accent_color }}; height: 100%; width: 0%; transition: width 0.8s ease-out;"></div>
           </div>
         </div>
 
         <!-- Smokiness Bar -->
-        <div data-flavor-bar data-value="{{ flavor_smokiness }}" data-color="{{ accent_color }}" data-delay="100ms" style="margin-bottom: 2.5rem;">
+        <div data-flavor-bar data-value="{{ flavor_smokiness }}" data-delay="100ms" style="margin-bottom: 2rem;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 0.375rem;">
             <span class="font-display" style="font-size: 0.75rem; letter-spacing: 0.2em; color: hsl(var(--foreground)); text-transform: uppercase;">Smokiness</span>
             <span class="font-display" style="font-size: 0.75rem; color: hsl(var(--muted-foreground));">{{ flavor_smokiness }}/5</span>
           </div>
-          <div style="height: 0.75rem; background: hsla(var(--border), 0.4); border-radius: 9999px; overflow: hidden;">
-            <div class="flavor-bar-fill" style="background-color: {{ accent_color }}; height: 100%; width: 0%; transition: width 0.8s ease-out; transition-delay: 100ms;"></div>
+          <div style="height: 0.625rem; background: rgba(0, 0, 0, 0.08); border-radius: 9999px; overflow: hidden;">
+            <div class="flavor-bar-fill" style="background-color: {{ accent_color }}; height: 100%; width: 0%; transition: width 0.8s ease-out;"></div>
           </div>
         </div>
 
         <!-- Acidity Bar -->
-        <div data-flavor-bar data-value="{{ flavor_acidity }}" data-color="{{ accent_color }}" data-delay="200ms" style="margin-bottom: 2.5rem;">
+        <div data-flavor-bar data-value="{{ flavor_acidity }}" data-delay="200ms" style="margin-bottom: 2rem;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 0.375rem;">
             <span class="font-display" style="font-size: 0.75rem; letter-spacing: 0.2em; color: hsl(var(--foreground)); text-transform: uppercase;">Acidity</span>
             <span class="font-display" style="font-size: 0.75rem; color: hsl(var(--muted-foreground));">{{ flavor_acidity }}/5</span>
           </div>
-          <div style="height: 0.75rem; background: hsla(var(--border), 0.4); border-radius: 9999px; overflow: hidden;">
-            <div class="flavor-bar-fill" style="background-color: {{ accent_color }}; height: 100%; width: 0%; transition: width 0.8s ease-out; transition-delay: 200ms;"></div>
+          <div style="height: 0.625rem; background: rgba(0, 0, 0, 0.08); border-radius: 9999px; overflow: hidden;">
+            <div class="flavor-bar-fill" style="background-color: {{ accent_color }}; height: 100%; width: 0%; transition: width 0.8s ease-out;"></div>
           </div>
         </div>
 
         <!-- Complexity Bar -->
-        <div data-flavor-bar data-value="{{ flavor_complexity }}" data-color="{{ accent_color }}" data-delay="300ms">
+        <div data-flavor-bar data-value="{{ flavor_complexity }}" data-delay="300ms" style="margin-bottom: 2rem;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 0.375rem;">
             <span class="font-display" style="font-size: 0.75rem; letter-spacing: 0.2em; color: hsl(var(--foreground)); text-transform: uppercase;">Complexity</span>
             <span class="font-display" style="font-size: 0.75rem; color: hsl(var(--muted-foreground));">{{ flavor_complexity }}/5</span>
           </div>
-          <div style="height: 0.75rem; background: hsla(var(--border), 0.4); border-radius: 9999px; overflow: hidden;">
-            <div class="flavor-bar-fill" style="background-color: {{ accent_color }}; height: 100%; width: 0%; transition: width 0.8s ease-out; transition-delay: 300ms;"></div>
+          <div style="height: 0.625rem; background: rgba(0, 0, 0, 0.08); border-radius: 9999px; overflow: hidden;">
+            <div class="flavor-bar-fill" style="background-color: {{ accent_color }}; height: 100%; width: 0%; transition: width 0.8s ease-out;"></div>
           </div>
         </div>
+
+        <!-- Origin Block -->
+        {% if product.metafields.custom.origin_region.value %}
+          <div style="margin-top: 3rem;">
+            <p class="font-display" style="font-size: 0.75rem; letter-spacing: 0.2em; color: hsl(var(--foreground)); text-transform: uppercase; margin: 0 0 0.5rem 0;">Origin</p>
+            <p class="font-body" style="font-size: 1rem; color: hsl(var(--foreground)); margin: 0; line-height: 1.6;">{{ product.metafields.custom.origin_region.value }}</p>
+          </div>
+        {% endif %}
+
+        <!-- Ingredient Chips -->
+        {% if product.metafields.custom.origin_ingredients.value %}
+          <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem;">
+            {% for ingredient in product.metafields.custom.origin_ingredients.value %}
+              <span class="font-body" style="font-size: 0.875rem; border: 1px solid hsl(var(--border)); border-radius: 9999px; padding: 0.375rem 0.875rem; display: inline-flex; align-items: center; gap: 0.25rem; color: hsl(var(--foreground));">
+                {{ ingredient }}
+              </span>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
 
-      <!-- RIGHT: Origin & Quote -->
+      <!-- RIGHT: Chef Photo & Quote -->
       <div>
-        <!-- Origin Region -->
-        {% if product.metafields.custom.origin_region.value %}
-          <div style="margin-bottom: 2.5rem;">
-            <p class="font-display" style="font-size: 0.75rem; letter-spacing: 0.2em; color: hsl(var(--muted-foreground)); text-transform: uppercase; margin: 0 0 0.5rem 0;">Origin Region</p>
-            <p class="font-body text-foreground" style="margin: 0; font-size: 1.125rem;">{{ product.metafields.custom.origin_region.value }}</p>
-          </div>
-        {% endif %}
-
-        <!-- Origin Ingredients -->
-        {% if product.metafields.custom.origin_ingredients.value %}
-          <div style="margin-bottom: 2.5rem;">
-            <p class="font-display" style="font-size: 0.75rem; letter-spacing: 0.2em; color: hsl(var(--muted-foreground)); text-transform: uppercase; margin: 0 0 0.75rem 0;">Origin Ingredients</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-              {% for ingredient in product.metafields.custom.origin_ingredients.value %}
-                <span class="font-body" style="font-size: 0.875rem; color: hsl(var(--foreground));">{{ ingredient }}</span>
-              {% endfor %}
-            </div>
-          </div>
-        {% endif %}
+        <!-- Chef Photo -->
+        <div style="margin-bottom: 1rem;">
+          <img src="{{ 'chef-arik.png' | asset_url }}" alt="Chef Arik" style="width: 4rem; height: 4rem; border-radius: 50%; object-fit: cover; display: block;">
+        </div>
 
         <!-- Chef Quote -->
         {% if product.metafields.custom.chef_quote.value %}
-          <blockquote class="spray-quote" style="padding-left: 1rem; margin-top: 2rem; border-left: 3px solid {{ accent_color }};">
-            <p class="font-raw" style="font-size: 1.5rem; color: {{ accent_color }}; transform: rotate(-0.5deg); margin: 0;">
-              "{{ product.metafields.custom.chef_quote.value }}"
-            </p>
-            <footer class="font-display" style="font-size: 0.875rem; letter-spacing: 0.15em; color: hsl(var(--primary)); margin-top: 1rem;">
-              — Chef Arik Markus
-            </footer>
+          <blockquote style="margin: 0; padding: 0;">
+            <p class="font-raw" style="font-size: 1.5rem; color: {{ accent_color }}; transform: rotate(-0.5deg); margin: 0; line-height: 1.6;">{{ product.metafields.custom.chef_quote.value }}</p>
+            <footer class="font-display" style="font-size: 0.875rem; letter-spacing: 0.2em; color: hsl(var(--primary)); margin-top: 1rem; text-transform: uppercase;">— Chef Arik Markus</footer>
           </blockquote>
         {% endif %}
       </div>

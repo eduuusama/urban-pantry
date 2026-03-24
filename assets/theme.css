@@ -137,9 +137,15 @@ button { cursor: pointer; border: none; background: none; padding: 0; font: inhe
   100% { transform: translateX(-50%); }
 }
 .animate-marquee {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
   animation: marquee 30s linear infinite;
 }
 .animate-marquee-fast {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
   animation: marquee 20s linear infinite;
 }
 .animate-marquee:hover,

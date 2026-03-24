@@ -1,36 +1,81 @@
-<section style="padding: 6rem 1rem; max-width: 1280px; margin: 0 auto;">
+<section style="background-color: white; padding: 6rem 1.5rem;">
+  <div style="max-width: 80rem; margin: 0 auto;">
 
-  <!-- Heading -->
-  <h2 class="font-display text-foreground text-center" style="font-size: 3rem; margin: 0 0 3rem 0;">What They're Saying</h2>
+    <!-- Heading -->
+    <h2 class="font-display" style="font-size: 3rem; text-align: center; color: hsl(var(--foreground)); margin: 0 0 1.5rem 0;">What People Are Saying</h2>
 
-  <!-- Reviews Grid -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+    <!-- Subtitle -->
+    <p class="font-body" style="text-align: center; color: hsl(var(--muted-foreground)); font-weight: 300; margin: 0 0 3rem 0; line-height: 1.6;">Real reviews from real heat lovers.</p>
 
-    {% for block in section.blocks %}
-      {% if block.type == 'review' %}
-        <div style="border: 1px solid hsl(var(--border)); border-radius: 0.375rem; padding: 2rem; background: white;">
+    <!-- Reviews Grid -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem;">
 
-          <!-- Star Rating -->
-          <div style="margin-bottom: 1rem;">
-            {% render 'star-rating', stars: block.settings.stars, accent_color: product.metafields.custom.accent_color.value %}
-          </div>
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'review' %}
+            <div style="border: 1px solid hsl(var(--border)); border-radius: 0.5rem; padding: 2rem; background: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
 
-          <!-- Review Text -->
-          <p class="font-body text-muted-foreground" style="margin: 1rem 0; line-height: 1.8; font-style: italic;">
-            "{{ block.settings.review_text }}"
+              <!-- Stars -->
+              <div style="margin-bottom: 1rem; color: hsl(var(--primary));">
+                {% for i in (1..block.settings.stars) %}
+                  ★
+                {% endfor %}
+              </div>
+
+              <!-- Review Text -->
+              <p class="font-body" style="font-size: 1rem; color: hsl(var(--muted-foreground)); margin: 1rem 0; line-height: 1.8; font-style: italic;">
+                "{{ block.settings.review_text }}"
+              </p>
+
+              <!-- Reviewer Name -->
+              <p class="font-display" style="margin: 1rem 0 0 0; font-size: 0.875rem; letter-spacing: 0.1em; color: hsl(var(--primary));">
+                — {{ block.settings.reviewer_name }}
+              </p>
+
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <!-- Default Bomba Reviews -->
+        <div style="border: 1px solid hsl(var(--border)); border-radius: 0.5rem; padding: 2rem; background: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+          <div style="margin-bottom: 1rem; color: hsl(var(--primary));">★★★★★</div>
+          <p class="font-body" style="font-size: 1rem; color: hsl(var(--muted-foreground)); margin: 1rem 0; line-height: 1.8; font-style: italic;">
+            "Bomba turned my plain pasta into restaurant-level magic — rich, fiery, and so authentic."
           </p>
-
-          <!-- Reviewer Name -->
-          <p class="font-display text-primary" style="margin: 1rem 0 0 0; font-size: 0.875rem; letter-spacing: 0.1em;">
-            — {{ block.settings.reviewer_name }}
+          <p class="font-display" style="margin: 1rem 0 0 0; font-size: 0.875rem; letter-spacing: 0.1em; color: hsl(var(--primary));">
+            — Emily R.
           </p>
+        </div>
 
+        <div style="border: 1px solid hsl(var(--border)); border-radius: 0.5rem; padding: 2rem; background: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+          <div style="margin-bottom: 1rem; color: hsl(var(--primary));">★★★★★</div>
+          <p class="font-body" style="font-size: 1rem; color: hsl(var(--muted-foreground)); margin: 1rem 0; line-height: 1.8; font-style: italic;">
+            "I put this on everything Italian now. Pizza, pasta, even just bread and olive oil."
+          </p>
+          <p class="font-display" style="margin: 1rem 0 0 0; font-size: 0.875rem; letter-spacing: 0.1em; color: hsl(var(--primary));">
+            — Marco D.
+          </p>
+        </div>
+
+        <div style="border: 1px solid hsl(var(--border)); border-radius: 0.5rem; padding: 2rem; background: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+          <div style="margin-bottom: 1rem; color: hsl(var(--primary));">★★★★★</div>
+          <p class="font-body" style="font-size: 1rem; color: hsl(var(--muted-foreground)); margin: 1rem 0; line-height: 1.8; font-style: italic;">
+            "Finally a hot sauce that actually tastes Italian, not just hot. The smoky garlic depth is unreal."
+          </p>
+          <p class="font-display" style="margin: 1rem 0 0 0; font-size: 0.875rem; letter-spacing: 0.1em; color: hsl(var(--primary));">
+            — Sarah L.
+          </p>
         </div>
       {% endif %}
-    {% endfor %}
+
+    </div>
+
+    <!-- Read All Reviews Link -->
+    <div style="text-align: center;">
+      <a href="#" class="font-display" style="font-size: 0.875rem; letter-spacing: 0.2em; color: hsl(var(--primary)); text-decoration: none; border-bottom: 1px solid hsl(var(--primary)); text-transform: uppercase;">Read all reviews →</a>
+    </div>
 
   </div>
-
 </section>
 
 {% schema %}
