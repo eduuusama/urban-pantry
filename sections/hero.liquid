@@ -1,129 +1,106 @@
-{%- comment -%} Desktop Hero {%- endcomment -%}
-<section class="hidden md:block relative min-h-screen overflow-hidden grain-overlay grain-heavy" id="hero-section">
-  {%- comment -%} Background Image {%- endcomment -%}
-  <div
-    class="absolute inset-0"
-    style="
-      background-image: url('{{ 'hero-desktop.webp' | asset_url }}');
-      background-size: cover;
-      background-position: right center;
-    "
-  ></div>
+<!-- Desktop Hero -->
+<section
+  id="hero-desktop"
+  class="grain-overlay grain-heavy"
+  style="position: relative; min-height: 100vh; overflow: hidden; display: none;"
+  aria-label="Hero section"
+>
+  <!-- Background image -->
+  <div style="position: absolute; inset: 0;">
+    <img
+      src="{{ 'hero-desktop.webp' | asset_url }}"
+      alt="Urban Pantry hot sauce collection"
+      style="width: 100%; height: 100%; object-fit: cover; object-position: right center;"
+      width="1330"
+      height="800"
+    />
+    <div style="position: absolute; inset: 0; background: linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background) / 0.8) 35%, transparent 100%);"></div>
+  </div>
 
-  {%- comment -%} Gradient Overlay {%- endcomment -%}
-  <div
-    class="absolute inset-0"
-    style="
-      background: linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background)) 30%, transparent 100%);
-    "
-  ></div>
+  <!-- Content -->
+  <div style="position: relative; z-index: 2; max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; min-height: 100vh;">
+    <div style="max-width: 36rem;">
+      <h1
+        class="font-display animate-word-reveal"
+        style="font-size: clamp(3rem, 5vw, 4.5rem); line-height: 0.95; color: hsl(var(--foreground)); margin-bottom: 0.5rem; animation-delay: 300ms;"
+      >Chef-Crafted Heat.</h1>
 
-  {%- comment -%} Content {%- endcomment -%}
-  <div class="relative h-full flex items-center">
-    <div class="max-w-7xl mx-auto px-6 max-w-xl">
-      <div class="space-y-4">
-        <h1
-          class="font-display text-5xl lg:text-6xl text-foreground animate-word-reveal"
-          style="opacity: 0; animation-delay: 300ms;"
-        >
-          Chef-Crafted Heat.
-        </h1>
+      <h2
+        class="font-raw animate-word-reveal"
+        style="font-size: clamp(2.5rem, 4vw, 3.75rem); color: hsl(var(--primary)); transform: rotate(-1deg); display: inline-block; margin-bottom: 1.5rem; animation-delay: 450ms;"
+      >Street-Born Flavor.</h2>
 
-        <h2
-          class="font-raw text-5xl text-primary -rotate-2 animate-word-reveal"
-          style="opacity: 0; animation-delay: 450ms;"
-        >
-          Street-Born Flavor.
-        </h2>
+      <p
+        class="font-body"
+        style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); max-width: 32rem; line-height: 1.6; margin-bottom: 2.5rem; font-weight: 300; opacity: 0; animation: page-enter 0.6s ease forwards; animation-delay: 600ms;"
+      >Real peppers. Real spices. Real flavor — sourced from where they're born, crafted by a Michelin-trained chef.</p>
 
-        <p
-          class="font-body text-muted-foreground max-w-lg leading-relaxed"
-          style="opacity: 0; animation: fadeIn 0.6s ease forwards; animation-delay: 600ms;"
-        >
-          Real peppers. Real spices. Real flavor — sourced from where they're born, crafted by a Michelin-trained chef.
-        </p>
-
-        <div style="opacity: 0; animation: fadeIn 0.6s ease forwards; animation-delay: 750ms;">
-          <a
-            href="/products/boom-box"
-            class="btn-add-to-cart inline-block bg-primary text-primary-foreground font-display text-xl tracking-widest px-10 py-4 rounded transition-opacity hover:opacity-90 animate-cta-pulse"
-            role="button"
-          >
-            Shop the Collection
-          </a>
-        </div>
+      <div style="opacity: 0; animation: page-enter 0.6s ease forwards; animation-delay: 750ms;">
+        <a
+          href="/collections/all"
+          class="font-display animate-cta-pulse"
+          style="display: inline-block; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); font-size: 1.125rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 2.5rem; text-decoration: none; transition: opacity 0.2s;"
+        >Shop the Collection</a>
       </div>
     </div>
   </div>
 </section>
 
-{%- comment -%} Mobile Hero {%- endcomment -%}
-<section class="md:hidden relative py-12 px-6 grain-overlay" id="hero-section-mobile">
-  <div class="text-center space-y-6 mb-8">
-    <h1 class="font-display text-4xl text-foreground animate-word-reveal">Chef-Crafted Heat.</h1>
-    <h2 class="font-raw text-3xl text-primary -rotate-2 animate-word-reveal" style="animation-delay: 150ms;">
-      Street-Born Flavor.
-    </h2>
+<!-- Mobile Hero -->
+<section
+  id="hero-mobile"
+  class="grain-overlay"
+  style="background: hsl(var(--background)); overflow: hidden;"
+  aria-label="Hero section"
+>
+  <div style="padding: 3rem 1rem 2rem; text-align: center;">
+    <h1
+      class="font-display animate-word-reveal"
+      style="font-size: 2.75rem; line-height: 0.95; color: hsl(var(--foreground)); margin-bottom: 0.5rem; animation-delay: 300ms;"
+    >Chef-Crafted Heat.</h1>
 
-    <p class="font-body text-muted-foreground text-sm leading-relaxed max-w-sm mx-auto" style="opacity: 0; animation: fadeIn 0.6s ease forwards; animation-delay: 300ms;">
-      Real peppers. Real spices. Real flavor — sourced from where they're born, crafted by a Michelin-trained chef.
-    </p>
+    <h2
+      class="font-raw animate-word-reveal"
+      style="font-size: 2.25rem; color: hsl(var(--primary)); transform: rotate(-1deg); display: inline-block; margin-bottom: 1rem; animation-delay: 450ms;"
+    >Street-Born Flavor.</h2>
 
-    <div style="opacity: 0; animation: fadeIn 0.6s ease forwards; animation-delay: 450ms;">
+    <p
+      class="font-body"
+      style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 20rem; margin: 0 auto 1.5rem; line-height: 1.6; font-weight: 300; opacity: 0; animation: page-enter 0.6s ease forwards; animation-delay: 600ms;"
+    >Real peppers. Real spices. Real flavor — sourced from where they're born, crafted by a Michelin-trained chef.</p>
+
+    <div style="opacity: 0; animation: page-enter 0.6s ease forwards; animation-delay: 750ms;">
       <a
-        href="/products/boom-box"
-        class="inline-block bg-primary text-primary-foreground font-display text-base tracking-widest px-6 py-3 rounded transition-opacity hover:opacity-90"
-        role="button"
-      >
-        Shop Now
-      </a>
+        href="/collections/all"
+        class="font-display"
+        style="display: inline-block; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); font-size: 0.875rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.625rem 1.25rem; text-decoration: none;"
+      >Shop the Collection</a>
     </div>
   </div>
 
-  <img
-    src="{{ 'hero-mobile.webp' | asset_url }}"
-    alt="Urban Pantry hot sauces"
-    class="w-full object-contain"
-  />
+  <div style="padding: 0 1rem 1rem;">
+    <img
+      src="{{ 'hero-mobile.webp' | asset_url }}"
+      alt="Urban Pantry hot sauce collection"
+      style="width: 100%; max-width: 28rem; margin: 0 auto; display: block; object-fit: contain;"
+      width="665"
+      height="665"
+    />
+  </div>
 </section>
 
 <style>
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  /* Desktop: show desktop hero, hide mobile hero */
+  @media (min-width: 768px) {
+    #hero-desktop { display: block !important; }
+    #hero-mobile  { display: none !important; }
   }
-
-  #hero-section.revealed h1,
-  #hero-section.revealed h2 {
-    opacity: 1;
-  }
-
-  #hero-section-mobile.revealed h1,
-  #hero-section-mobile.revealed h2 {
-    opacity: 1;
+  /* Mobile: show mobile hero (it's visible by default since desktop is display:none) */
+  @media (max-width: 767px) {
+    #hero-desktop { display: none !important; }
+    #hero-mobile  { display: block !important; }
   }
 </style>
-
-<script>
-  (function() {
-    const sections = [
-      document.getElementById('hero-section'),
-      document.getElementById('hero-section-mobile')
-    ];
-
-    setTimeout(() => {
-      sections.forEach(section => {
-        if (section) {
-          section.classList.add('revealed');
-        }
-      });
-    }, 200);
-  })();
-</script>
 
 {% schema %}
 {
