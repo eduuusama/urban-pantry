@@ -16,14 +16,14 @@
     <div class="max-w-7xl mx-auto px-6" style="display: flex; align-items: center; justify-content: space-between; height: 4rem; transition: height 0.3s ease;" id="nav-inner">
 
       <!-- Logo -->
-      <a href="/" style="display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;" aria-label="Urban Pantry Home">
+      <a href="/" style="display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; text-decoration: none;" aria-label="Urban Pantry Home">
         <img
           src="{{ 'logo.png' | asset_url }}"
-          alt="Urban Pantry"
+          alt=""
           id="nav-logo"
-          style="height: 2.5rem; width: auto; transition: height 0.3s ease;"
+          style="height: 2rem; width: auto; transition: height 0.3s ease; flex-shrink: 0;"
         />
-        <span class="font-raw text-foreground" style="font-size: 1.25rem; display: none;" id="nav-brand-name">Urban Pantry</span>
+        <span class="font-raw" style="font-size: 1.375rem; color: hsl(var(--foreground)); line-height: 1; letter-spacing: 0.02em;" id="nav-brand-name">Urban Pantry</span>
       </a>
 
       <!-- Desktop Nav Links -->
@@ -104,7 +104,6 @@
   @media (min-width: 768px) {
     #desktop-nav { display: flex !important; }
     #hamburger-btn { display: none !important; }
-    #nav-brand-name { display: inline !important; }
   }
 </style>
 

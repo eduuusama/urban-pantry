@@ -4,12 +4,14 @@
 
       {%- comment -%} Logo & Tagline {%- endcomment -%}
       <div>
-        <img
-          src="{{ 'logo.png' | asset_url }}"
-          alt="Urban Pantry"
-          style="height: 80px; width: auto; margin-bottom: 1rem;"
-        />
-        <p class="font-raw text-2xl text-foreground mb-4">Urban Pantry</p>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+          <img
+            src="{{ 'logo.png' | asset_url }}"
+            alt=""
+            style="height: 2rem; width: auto; flex-shrink: 0;"
+          />
+          <span class="font-raw" style="font-size: 1.375rem; color: hsl(var(--foreground));">Urban Pantry</span>
+        </div>
         <p class="text-muted-foreground text-sm font-light leading-relaxed">
           Chef-crafted hot sauces that honor the flavor of each cuisine. Vegan. Gluten-free. Sugar-free. Nothing artificial. Ever.
         </p>
